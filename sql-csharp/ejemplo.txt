@@ -1,0 +1,7 @@
+Nombre,Paterno,Materno,Edad,Grupo,Boleta
+Héctor,Díaz,Campos,22,5CV4,12345678
+Ricardo,Gonzales,Tello,23,5CV4,87654321
+Humberto,Campos,Oropeza,22,7CV3,12348765
+Mario,Moreno,Cantinflas,17,3CV3,421337900
+sd,sad,qwe,17,3CV3,421337900
+Carlos,Chaplin,---,16,3CV3,overninethousand

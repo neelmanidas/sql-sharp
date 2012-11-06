@@ -1,0 +1,10 @@
+using System.Reflection;
+[assembly: AssemblyTitle("sql-sharp")]
+[assembly: AssemblyDescription("Sql to C# translator")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("IPN ESIME Culhuacan")]
+[assembly: AssemblyProduct("sql-sharp")]
+[assembly: AssemblyCopyright("3kthor3adward")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+[assembly: AssemblyVersion("1.0.*")]

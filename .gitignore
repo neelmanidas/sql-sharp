@@ -1,0 +1,12 @@
+bin
+obj
+test-results
+TestResults
+
+*.userprefs
+*.*~
+*.suo
+*.cache
+*.csproj.user
+StyleCop.Cache
+*.resources
