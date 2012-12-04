@@ -1,6 +1,6 @@
-<query list> := <query specification> [ {<semicolon> <query list> <semicolon> }... ]
+<query list> := <query specification> [ { <query specification> }... ]
 
-<query specification> ::= SELECT <select list> FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <identifier> ]
+<query specification> ::= SELECT <select list> FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <identifier> ] <semicolon>
 
 <select list> ::= <asterisk> | <derived column> [ { <comma> <derived column> }... ]
 

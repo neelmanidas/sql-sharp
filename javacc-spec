@@ -39,11 +39,11 @@ void Prog() :
 
 void queryList() :
 {}
-{ querySpecification() [ <semicolon> queryList() <semicolon> ] }
+{ querySpecification() ( querySpecification() )* }
 
 void querySpecification() :
 {}
-{ "SELECT" selectList() "FROM" <identifier> [ "WHERE" booleanValueExpression() ] [ "GROUP BY" <identifier> ] }
+{ "SELECT" selectList() "FROM" <identifier> [ "WHERE" booleanValueExpression() ] [ "GROUP BY" <identifier> ] ";" }
 
 void selectList() :
 {}
@@ -79,15 +79,7 @@ void booleanTermPrime() :
 
 void booleanFactor() : 
 {}
-{ ["NOT"] booleanPrimary() [ "IS" ["NOT"] <truthValue> ] }
-
-void booleanPrimary() :
-{}
-{ rowvaluepredicand() <compop> rowvaluepredicand() | boleanPredicand() }
-
-void rowvaluepredicand() :
-{}
-{ commonValueExpression() | boleanPredicand() }
+{ ["NOT"] boleanPredicand() [<compop> boleanPredicand()] [ "IS" ["NOT"] <truthValue> ] }
 
 void boleanPredicand() :
 {}
