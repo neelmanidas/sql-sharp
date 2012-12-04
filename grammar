@@ -8,17 +8,13 @@
 
 <value expression> ::= <common value expression>
 
-<common value expression> ::= <parenthesized value expression> | <nonparenthesized value expression primary>
-
-<parenthesized value expression> ::= <left paren> <value expression> <right paren>
+<common value expression> ::= <left paren> <value expression> <right paren> | <nonparenthesized value expression primary>
 
 <left paren> ::= (
 
 <right paren> ::= )
 
-<nonparenthesized value expression primary> ::= <column reference> | <set function type> <left paren> <value expression> <right paren>
-
-<column reference> ::= <identifier>
+<nonparenthesized value expression primary> ::= <identifier> | <set function type> <left paren> <value expression> <right paren>
 
 <identifier> ::= <identifier start> [ <identifier part> ... ]
 
@@ -32,7 +28,7 @@
 
 <comma> ::= ,
 
-<table expression> ::= FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <column reference> [ { <comma> <column reference> }... ] ]
+<table expression> ::= FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <identifier> [ { <comma> <identifier> }... ] ]
 
 <boolean value expression> ::= <boolean term> | <boolean value expression> OR <boolean term>
 
@@ -42,9 +38,7 @@
 
 <boolean primary> ::= <row value predicand> <comparison predicate part 2> | <boolean predicand>
 
-<row value predicand> ::= <nonparenthesized value expression primary> | <row value constructor predicand>
-
-<row value constructor predicand> ::= <common value expression> | <boolean predicand>
+<row value predicand> ::= <nonparenthesized value expression primary> | <common value expression> | <boolean predicand>
 
 <boolean predicand> ::= <parenthesized boolean value expression> | <nonparenthesized value expression primary>
 
