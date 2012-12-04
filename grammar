@@ -1,4 +1,4 @@
-<query specification> ::= SELECT <select list> FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <identifier> [ { <comma> <identifier> }... ] ]
+<query specification> ::= SELECT <select list> FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <identifier> ]
 
 <select list> ::= <asterisk> | <derived column> [ { <comma> <derived column> }... ]
 
@@ -14,13 +14,7 @@
 
 <nonparenthesized value expression primary> ::= <identifier> | <set function type> <left paren> <common value expression> <right paren>
 
-<identifier> ::= <identifier start> [ <identifier part> ... ]
-
-<identifier start> ::= !! See the Syntax Rules
-
-<identifier part> ::= <identifier start> | <identifier extend>
-
-<identifier extend> ::= !! See the Syntax Rules
+<identifier> ::= !! See the Syntax Rules
 
 <set function type> ::= AVG | MAX | MIN | SUM | COUNT
 
