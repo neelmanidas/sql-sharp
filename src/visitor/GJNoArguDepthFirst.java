@@ -90,7 +90,8 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
     * f3 -> <identifier>
     * f4 -> [ "WHERE" booleanValueExpression() ]
     * f5 -> [ "GROUP BY" <identifier> ]
-    * f6 -> ";"
+    * f6 -> [ "ORDER BY" commonValueExpression() [ "ASC" | "DESC" ] ]
+    * f7 -> ";"
     */
    public R visit(querySpecification n) {
       R _ret=null;
@@ -101,6 +102,7 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
       n.f4.accept(this);
       n.f5.accept(this);
       n.f6.accept(this);
+      n.f7.accept(this);
       return _ret;
    }
 

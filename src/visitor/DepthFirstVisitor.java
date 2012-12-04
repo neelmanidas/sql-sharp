@@ -66,7 +66,8 @@ public class DepthFirstVisitor implements Visitor {
     * f3 -> <identifier>
     * f4 -> [ "WHERE" booleanValueExpression() ]
     * f5 -> [ "GROUP BY" <identifier> ]
-    * f6 -> ";"
+    * f6 -> [ "ORDER BY" commonValueExpression() [ "ASC" | "DESC" ] ]
+    * f7 -> ";"
     */
    public void visit(querySpecification n) {
       n.f0.accept(this);
@@ -76,6 +77,7 @@ public class DepthFirstVisitor implements Visitor {
       n.f4.accept(this);
       n.f5.accept(this);
       n.f6.accept(this);
+      n.f7.accept(this);
    }
 
    /**

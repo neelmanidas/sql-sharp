@@ -36,6 +36,7 @@ TOKEN :
    | <FROM: "FROM">
    | <WHERE: "WHERE">
    | <GROUPBY: "GROUP BY">
+   | <ORDERBY: "ORDER BY">
    | <comma: ",">
    | <identifier: ["a"-"z"] (["a"-"z"] | ["0"-"9"])*>
    | <asterisk: "*">
@@ -57,6 +58,8 @@ TOKEN :
    | <#lessthanoperator: "<">
    | <#greaterthanoperator: ">">
    | <compop: <equalsoperator> | <lessthanoperator> <greaterthanoperator> | <lessthanoperator> | <greaterthanoperator> | <lessthanoperator> <equalsoperator> | <greaterthanoperator> <equalsoperator>>
+   | <ASC: "ASC">
+   | <DESC: "DESC">
 }
 
 Prog Prog() :
@@ -116,8 +119,19 @@ querySpecification querySpecification() :
    Token n15;
    NodeToken n16;
    Token n17;
-   NodeToken n18;
-   Token n19;
+   NodeOptional n18 = new NodeOptional();
+   NodeSequence n19;
+   NodeToken n20;
+   Token n21;
+   commonValueExpression n22;
+   NodeOptional n23;
+   NodeChoice n24;
+   NodeToken n25;
+   Token n26;
+   NodeToken n27;
+   Token n28;
+   NodeToken n29;
+   Token n30;
 
    
 }
@@ -142,9 +156,29 @@ querySpecification querySpecification() :
       { n13.addNode(n16); }
       { n12.addNode(n13); }
    )?
-   n19=";" { n18 = JTBToolkit.makeNodeToken(n19); }
+   (
+      { n23 = new NodeOptional(); }
+      { n19 = new NodeSequence(3); }
+      n21="ORDER BY" { n20 = JTBToolkit.makeNodeToken(n21); }
+      { n19.addNode(n20); }
+      n22=commonValueExpression()
+      { n19.addNode(n22); }
+      (
+         (
+            n26="ASC" { n25 = JTBToolkit.makeNodeToken(n26); }
+            { n24 = new NodeChoice(n25, 0); }
+         |
+            n28="DESC" { n27 = JTBToolkit.makeNodeToken(n28); }
+            { n24 = new NodeChoice(n27, 1); }
+         )
+         { n23.addNode(n24); }
+      )?
+      { n19.addNode(n23); }
+      { n18.addNode(n19); }
+   )?
+   n30=";" { n29 = JTBToolkit.makeNodeToken(n30); }
    
-   { return new querySpecification(n0,n2,n3,n5,n7,n12,n18); }
+   { return new querySpecification(n0,n2,n3,n5,n7,n12,n18,n29); }
 }
 
 selectList selectList() :

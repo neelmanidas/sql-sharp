@@ -12,7 +12,8 @@ package syntaxtree;
  * f3 -> <identifier>
  * f4 -> [ "WHERE" booleanValueExpression() ]
  * f5 -> [ "GROUP BY" <identifier> ]
- * f6 -> ";"
+ * f6 -> [ "ORDER BY" commonValueExpression() [ "ASC" | "DESC" ] ]
+ * f7 -> ";"
  */
 public class querySpecification implements Node {
    public NodeToken f0;
@@ -21,9 +22,10 @@ public class querySpecification implements Node {
    public NodeToken f3;
    public NodeOptional f4;
    public NodeOptional f5;
-   public NodeToken f6;
+   public NodeOptional f6;
+   public NodeToken f7;
 
-   public querySpecification(NodeToken n0, selectList n1, NodeToken n2, NodeToken n3, NodeOptional n4, NodeOptional n5, NodeToken n6) {
+   public querySpecification(NodeToken n0, selectList n1, NodeToken n2, NodeToken n3, NodeOptional n4, NodeOptional n5, NodeOptional n6, NodeToken n7) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
@@ -31,16 +33,18 @@ public class querySpecification implements Node {
       f4 = n4;
       f5 = n5;
       f6 = n6;
+      f7 = n7;
    }
 
-   public querySpecification(selectList n0, NodeToken n1, NodeOptional n2, NodeOptional n3) {
+   public querySpecification(selectList n0, NodeToken n1, NodeOptional n2, NodeOptional n3, NodeOptional n4) {
       f0 = new NodeToken("SELECT");
       f1 = n0;
       f2 = new NodeToken("FROM");
       f3 = n1;
       f4 = n2;
       f5 = n3;
-      f6 = new NodeToken(";");
+      f6 = n4;
+      f7 = new NodeToken(";");
    }
 
    public void accept(visitor.Visitor v) {

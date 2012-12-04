@@ -76,7 +76,8 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
     * f3 -> <identifier>
     * f4 -> [ "WHERE" booleanValueExpression() ]
     * f5 -> [ "GROUP BY" <identifier> ]
-    * f6 -> ";"
+    * f6 -> [ "ORDER BY" commonValueExpression() [ "ASC" | "DESC" ] ]
+    * f7 -> ";"
     */
    public void visit(querySpecification n, A argu) {
       n.f0.accept(this, argu);
@@ -86,6 +87,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
       n.f4.accept(this, argu);
       n.f5.accept(this, argu);
       n.f6.accept(this, argu);
+      n.f7.accept(this, argu);
    }
 
    /**

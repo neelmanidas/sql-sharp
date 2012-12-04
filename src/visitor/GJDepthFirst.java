@@ -90,7 +90,8 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
     * f3 -> <identifier>
     * f4 -> [ "WHERE" booleanValueExpression() ]
     * f5 -> [ "GROUP BY" <identifier> ]
-    * f6 -> ";"
+    * f6 -> [ "ORDER BY" commonValueExpression() [ "ASC" | "DESC" ] ]
+    * f7 -> ";"
     */
    public R visit(querySpecification n, A argu) {
       R _ret=null;
@@ -101,6 +102,7 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
       n.f4.accept(this, argu);
       n.f5.accept(this, argu);
       n.f6.accept(this, argu);
+      n.f7.accept(this, argu);
       return _ret;
    }
 

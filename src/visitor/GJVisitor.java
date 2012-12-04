@@ -45,7 +45,8 @@ public interface GJVisitor<R,A> {
     * f3 -> <identifier>
     * f4 -> [ "WHERE" booleanValueExpression() ]
     * f5 -> [ "GROUP BY" <identifier> ]
-    * f6 -> ";"
+    * f6 -> [ "ORDER BY" commonValueExpression() [ "ASC" | "DESC" ] ]
+    * f7 -> ";"
     */
    public R visit(querySpecification n, A argu);
 

@@ -17,47 +17,53 @@ public interface SQLParserConstants {
   /** RegularExpression Id. */
   int GROUPBY = 8;
   /** RegularExpression Id. */
-  int comma = 9;
+  int ORDERBY = 9;
   /** RegularExpression Id. */
-  int identifier = 10;
+  int comma = 10;
   /** RegularExpression Id. */
-  int asterisk = 11;
+  int identifier = 11;
   /** RegularExpression Id. */
-  int AS = 12;
+  int asterisk = 12;
   /** RegularExpression Id. */
-  int leftparen = 13;
+  int AS = 13;
   /** RegularExpression Id. */
-  int rightparen = 14;
+  int leftparen = 14;
   /** RegularExpression Id. */
-  int setfunctiontype = 15;
+  int rightparen = 15;
   /** RegularExpression Id. */
-  int digit = 16;
+  int setfunctiontype = 16;
   /** RegularExpression Id. */
-  int integer = 17;
+  int digit = 17;
   /** RegularExpression Id. */
-  int real = 18;
+  int integer = 18;
   /** RegularExpression Id. */
-  int number = 19;
+  int real = 19;
   /** RegularExpression Id. */
-  int OR = 20;
+  int number = 20;
   /** RegularExpression Id. */
-  int AND = 21;
+  int OR = 21;
   /** RegularExpression Id. */
-  int truthValue = 22;
+  int AND = 22;
   /** RegularExpression Id. */
-  int semicolon = 23;
+  int truthValue = 23;
   /** RegularExpression Id. */
-  int IS = 24;
+  int semicolon = 24;
   /** RegularExpression Id. */
-  int NOT = 25;
+  int IS = 25;
   /** RegularExpression Id. */
-  int equalsoperator = 26;
+  int NOT = 26;
   /** RegularExpression Id. */
-  int lessthanoperator = 27;
+  int equalsoperator = 27;
   /** RegularExpression Id. */
-  int greaterthanoperator = 28;
+  int lessthanoperator = 28;
   /** RegularExpression Id. */
-  int compop = 29;
+  int greaterthanoperator = 29;
+  /** RegularExpression Id. */
+  int compop = 30;
+  /** RegularExpression Id. */
+  int ASC = 31;
+  /** RegularExpression Id. */
+  int DESC = 32;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -73,6 +79,7 @@ public interface SQLParserConstants {
     "\"FROM\"",
     "\"WHERE\"",
     "\"GROUP BY\"",
+    "\"ORDER BY\"",
     "\",\"",
     "<identifier>",
     "\"*\"",
@@ -94,6 +101,8 @@ public interface SQLParserConstants {
     "\"<\"",
     "\">\"",
     "<compop>",
+    "\"ASC\"",
+    "\"DESC\"",
   };
 
 }
