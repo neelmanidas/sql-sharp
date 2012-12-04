@@ -24,17 +24,22 @@ TOKEN : {
     |	< OR: "OR">
     |	< AND: "AND">
     |	< truthValue: "TRUE" | "FALSE" | "UNKNOWN" >
+    |	<semicolon: ";">
     |	< IS: "IS">
     |	< NOT: "NOT">
-    |	< equalsoperator: "=">
-    |	< lessthanoperator: "<">
-    |	< greaterthanoperator: ">">
+    |	< #equalsoperator: "=" >
+    |	< #lessthanoperator: "<" >
+    |	< #greaterthanoperator: ">" >
     |	<compop: <equalsoperator> | <lessthanoperator> <greaterthanoperator> | <lessthanoperator> | <greaterthanoperator> | <lessthanoperator> <equalsoperator> | <greaterthanoperator> <equalsoperator>>
 }
 
 void Prog() :
 {}
-{ querySpecification() <EOF> }
+{ queryList() <EOF> }
+
+void queryList() :
+{}
+{ querySpecification() [ <semicolon> queryList() <semicolon> ] }
 
 void querySpecification() :
 {}
@@ -78,7 +83,11 @@ void booleanFactor() :
 
 void booleanPrimary() :
 {}
-{ boleanPredicand() ( <compop> boleanPredicand() )? }
+{ rowvaluepredicand() <compop> rowvaluepredicand() | boleanPredicand() }
+
+void rowvaluepredicand() :
+{}
+{ commonValueExpression() | boleanPredicand() }
 
 void boleanPredicand() :
 {}
