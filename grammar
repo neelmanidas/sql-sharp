@@ -8,7 +8,7 @@
 
 <derived column> ::= <common value expression> [ [ AS ] <identifier> ]
 
-<common value expression> ::= <left paren> <common value expression> <right paren> | <nonparenthesized value expression primary>
+<common value expression> ::= <left paren> <common value expression> <right paren> | <nonparenthesized value expression primary> | <number>
 
 <left paren> ::= (
 
@@ -19,6 +19,8 @@
 <identifier> ::= !! See the Syntax Rules
 
 <set function type> ::= AVG | MAX | MIN | SUM | COUNT
+
+<number> ::= !! See the Syntax Rules
 
 <comma> ::= ,
 

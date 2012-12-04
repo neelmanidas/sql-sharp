@@ -21,7 +21,10 @@ TOKEN : {
     |	< leftparen: "(">
     |	< rightparen: ")">
     |   < setfunctiontype: "AVG" | "MAX" | "MIN" | "SUM" | "COUNT">
-    |	< numeric: ["0"-"9"]*("."["0"-"9"])?
+    |	< #digit: ["0"-"9"] >
+    |	< #integer: (<digit>)+ >
+    |	< #real: ( <digit> )+ "." ( <digit> )+ >
+    |   < number: ( "+" | "-" )? ( <integer> | <real> ) >
     |	< OR: "OR">
     |	< AND: "AND">
     |	< truthValue: "TRUE" | "FALSE" | "UNKNOWN" >
@@ -60,7 +63,7 @@ void commonValueExpression() :
 
 void nonparenthesizedValueExpressionPrimary() :
 {}
-{ <identifier> | <setfunctiontype> "(" commonValueExpression() ")" | <numeric> }
+{ <identifier> | <setfunctiontype> "(" commonValueExpression() ")" | <number> }
 
 void booleanValueExpression() :
 {}
