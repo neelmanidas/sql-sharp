@@ -1,20 +1,18 @@
-<query specification> ::= SELECT <select list> <table expression>
+<query specification> ::= SELECT <select list> FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <identifier> [ { <comma> <identifier> }... ] ]
 
 <select list> ::= <asterisk> | <derived column> [ { <comma> <derived column> }... ]
 
 <asterisk> ::= *
 
-<derived column> ::= <value expression> [ [ AS ] <identifier> ]
+<derived column> ::= <common value expression> [ [ AS ] <identifier> ]
 
-<value expression> ::= <common value expression>
-
-<common value expression> ::= <left paren> <value expression> <right paren> | <nonparenthesized value expression primary>
+<common value expression> ::= <left paren> <common value expression> <right paren> | <nonparenthesized value expression primary>
 
 <left paren> ::= (
 
 <right paren> ::= )
 
-<nonparenthesized value expression primary> ::= <identifier> | <set function type> <left paren> <value expression> <right paren>
+<nonparenthesized value expression primary> ::= <identifier> | <set function type> <left paren> <common value expression> <right paren>
 
 <identifier> ::= <identifier start> [ <identifier part> ... ]
 
@@ -28,36 +26,24 @@
 
 <comma> ::= ,
 
-<table expression> ::= FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <identifier> [ { <comma> <identifier> }... ] ]
-
 <boolean value expression> ::= <boolean term> | <boolean value expression> OR <boolean term>
 
 <boolean term> ::= <boolean factor> | <boolean term> AND <boolean factor>
 
 <boolean factor> ::= [ NOT ] <boolean primary> [ IS [ NOT ] <truth value> ]
 
-<boolean primary> ::= <row value predicand> <comparison predicate part 2> | <boolean predicand>
+<boolean primary> ::= <row value predicand> <comp op> <row value predicand> | <boolean predicand>
 
 <row value predicand> ::= <nonparenthesized value expression primary> | <common value expression> | <boolean predicand>
 
-<boolean predicand> ::= <parenthesized boolean value expression> | <nonparenthesized value expression primary>
+<boolean predicand> ::= <left paren> <boolean value expression> <right paren> | <nonparenthesized value expression primary>
 
-<parenthesized boolean value expression> ::= <left paren> <boolean value expression> <right paren>
-
-<comparison predicate part 2> ::= <comp op> <row value predicand>
-
-<comp op> ::= <equals operator> | <not equals operator> | <less than operator> | <greater than operator> | <less than or equals operator> | <greater than or equals operator>
+<comp op> ::= <equals operator> | <less than operator> <greater than operator> | <less than operator> | <greater than operator> | <less than operator> <equals operator> | <greater than operator> <equals operator>
 
 <equals operator> ::= =
-
-<not equals operator> ::= <less than operator> <greater than operator>
 
 <less than operator> ::= <
 
 <greater than operator> ::= >
-
-<less than or equals operator> ::= <less than operator> <equals operator>
-
-<greater than or equals operator> ::= <greater than operator> <equals operator>
 
 <truth value> ::= TRUE | FALSE | UNKNOWN
