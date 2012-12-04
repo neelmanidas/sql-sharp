@@ -1,20 +1,14 @@
 <query specification> ::= SELECT <select list> <table expression>
 
-<select list> ::= <asterisk> | <select sublist> [ { <comma> <select sublist> }... ]
+<select list> ::= <asterisk> | <derived column> [ { <comma> <derived column> }... ]
 
 <asterisk> ::= *
 
-<select sublist> ::= <derived column>
-
-<derived column> ::= <value expression> [ <as clause> ]
+<derived column> ::= <value expression> [ [ AS ] <identifier> ]
 
 <value expression> ::= <common value expression>
 
-<common value expression> ::= <user-defined type value expression>
-
-<user-defined type value expression> ::= <value expression primary>
-
-<value expression primary> ::= <parenthesized value expression> | <nonparenthesized value expression primary>
+<common value expression> ::= <parenthesized value expression> | <nonparenthesized value expression primary>
 
 <parenthesized value expression> ::= <left paren> <value expression> <right paren>
 
@@ -22,21 +16,11 @@
 
 <right paren> ::= )
 
-<nonparenthesized value expression primary> ::= <column reference> | <set function specification>
+<nonparenthesized value expression primary> ::= <column reference> | <set function type> <left paren> <value expression> <right paren>
 
-<column reference> ::= <basic identifier chain>
+<column reference> ::= <identifier>
 
-<basic identifier chain> ::= <identifier chain>
-
-<identifier chain> ::= <identifier>
-
-<identifier> ::= <actual identifier>
-
-<actual identifier> ::= <regular identifier>
-
-<regular identifier> ::= <identifier body>
-
-<identifier body> ::= <identifier start> [ <identifier part> ... ]
+<identifier> ::= <identifier start> [ <identifier part> ... ]
 
 <identifier start> ::= !! See the Syntax Rules
 
@@ -44,63 +28,21 @@
 
 <identifier extend> ::= !! See the Syntax Rules
 
-<set function specification> ::= <aggregate function>
-
-<aggregate function> ::= <general set function>
-
-<general set function> ::= <set function type> <left paren> <value expression> <right paren>
-
-<set function type> ::= <computational operation>
-
-<computational operation> ::= AVG | MAX | MIN | SUM | COUNT
-
-<as clause> ::= [ AS ] <column name>
-
-<column name> ::= <identifier>
+<set function type> ::= AVG | MAX | MIN | SUM | COUNT
 
 <comma> ::= ,
 
-<table expression> ::= <from clause> [ <where clause> ] [ <group by clause> ]
-
-<from clause> ::= FROM <table reference list>
-
-<table reference list> ::= <table reference>
-
-<table reference> ::= <table primary or joined table>
-
-<table primary or joined table> ::= <table primary>
-
-<table primary> ::= <table or query name>
-
-<table or query name> ::= <table name>
-
-<table name> ::= <local or schema qualified name>
-
-<local or schema qualified name> ::= <qualified identifier>
-
-<qualified identifier> ::= <identifier>
-
-<where clause> ::= WHERE <search condition>
-
-<search condition> ::= <boolean value expression>
+<table expression> ::= FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <column reference> [ { <comma> <column reference> }... ] ]
 
 <boolean value expression> ::= <boolean term> | <boolean value expression> OR <boolean term>
 
 <boolean term> ::= <boolean factor> | <boolean term> AND <boolean factor>
 
-<boolean factor> ::= [ NOT ] <boolean test>
+<boolean factor> ::= [ NOT ] <boolean primary> [ IS [ NOT ] <truth value> ]
 
-<boolean test> ::= <boolean primary> [ IS [ NOT ] <truth value> ]
+<boolean primary> ::= <row value predicand> <comparison predicate part 2> | <boolean predicand>
 
-<boolean primary> ::= <predicate> | <boolean predicand>
-
-<predicate> ::= <comparison predicate>
-
-<comparison predicate> ::= <row value predicand> <comparison predicate part 2>
-
-<row value predicand> ::= <row value special case> | <row value constructor predicand>
-
-<row value special case> ::= <nonparenthesized value expression primary>
+<row value predicand> ::= <nonparenthesized value expression primary> | <row value constructor predicand>
 
 <row value constructor predicand> ::= <common value expression> | <boolean predicand> | <explicit row value constructor>
 
@@ -108,11 +50,9 @@
 
 <parenthesized boolean value expression> ::= <left paren> <boolean value expression> <right paren>
 
-<explicit row value constructor> ::= <left paren> <row value constructor element> <comma> <row value constructor element list> <right paren>
+<explicit row value constructor> ::= <left paren> <value expression> <comma> <row value constructor element list> <right paren>
 
-<row value constructor element> ::= <value expression>
-
-<row value constructor element list> ::= <row value constructor element> [ { <comma> <row value constructor element> }... ]
+<row value constructor element list> ::= <value expression> [ { <comma> <value expression> }... ]
 
 <comparison predicate part 2> ::= <comp op> <row value predicand>
 
@@ -131,13 +71,3 @@
 <greater than or equals operator> ::= <greater than operator> <equals operator>
 
 <truth value> ::= TRUE | FALSE | UNKNOWN
-
-<group by clause> ::= GROUP BY <grouping element list>
-
-<grouping element list> ::= <grouping element> [ { <comma> <grouping element> }... ]
-
-<grouping element> ::= <ordinary grouping set>
-
-<ordinary grouping set> ::= <grouping column reference>
-
-<grouping column reference> ::= <column reference>
