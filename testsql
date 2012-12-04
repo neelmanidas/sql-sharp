@@ -1,3 +1,1 @@
-SELECT COUNT(columna) AS counted FROM tabla WHERE p >= 8.9 ;
-
-SELECT * FROM tabla WHERE p <> 8.9 ;
+SELECT * FROM tabla;

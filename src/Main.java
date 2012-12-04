@@ -1,6 +1,7 @@
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import syntaxtree.Prog;
 
 /*
  * To change this template, choose Tools | Templates
@@ -15,6 +16,6 @@ public class Main {
     public static void main(String []args) throws FileNotFoundException, ParseException
     {
         SQLParser parser = new SQLParser(new FileInputStream("testsql"));
-        parser.Prog();
+        Prog prog = parser.Prog();
     }
 }
