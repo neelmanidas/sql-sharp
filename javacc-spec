@@ -78,11 +78,7 @@ void booleanFactor() :
 
 void booleanPrimary() :
 {}
-{ rowValuePredicand() <compop> rowValuePredicand() | boleanPredicand() }
-
-void rowValuePredicand() :
-{}
-{ nonparenthesizedValueExpressionPrimary()  | commonValueExpression() | boleanPredicand() }
+{ boleanPredicand() ( <compop> boleanPredicand() )? }
 
 void boleanPredicand() :
 {}
