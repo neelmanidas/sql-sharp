@@ -1,5 +1,5 @@
 PARSER_BEGIN(SQLParser)
-	class SQLParser {}
+class SQLParser {}
 PARSER_END(SQLParser)
 
 SKIP : {
@@ -42,8 +42,7 @@ void querySpecification() :
 
 void selectList() :
 {}
-{ "\*"
-  | derivedColumn() ([ "," derivedColumn() ])* }
+{ "*" | derivedColumn() ( "," derivedColumn() )* }
 
 void derivedColumn() :
 {}
@@ -51,23 +50,27 @@ void derivedColumn() :
 
 void commonValueExpression() :
 {}
-{ "(" commonValueExpression() ")"
-  | nonparenthesizedValueExpressionPrimary() }
+{ "(" commonValueExpression() ")" | nonparenthesizedValueExpressionPrimary() }
 
 void nonparenthesizedValueExpressionPrimary() :
 {}
-{ <identifier>
-  | <setfunctiontype> "(" commonValueExpression() ")" }
+{ <identifier> | <setfunctiontype> "(" commonValueExpression() ")" }
 
 void booleanValueExpression() :
 {}
-{ booleanTerm()
-  | booleanValueExpression() "OR" booleanTerm() }
+{ booleanTerm() booleanValueExpressionPrime() }
+
+void booleanValueExpressionPrime() :
+{}
+{ ( "OR" booleanTerm() booleanValueExpressionPrime() )? }
 
 void booleanTerm() :
 {}
-{ booleanFactor() 
-  | booleanTerm() "AND" booleanFactor() }
+{ booleanFactor() booleanTermPrime() }
+
+void booleanTermPrime() :
+{}
+{ ("AND" booleanFactor() booleanTermPrime())? }
 
 void booleanFactor() : 
 {}
@@ -75,17 +78,13 @@ void booleanFactor() :
 
 void booleanPrimary() :
 {}
-{ rowValuePredicand() <compop> rowValuePredicand()
-  | boleanPredicand()}
+{ rowValuePredicand() <compop> rowValuePredicand() | boleanPredicand() }
 
 void rowValuePredicand() :
 {}
-{ nonparenthesizedValueExpressionPrimary() 
-  | commonValueExpression() 
-  | boleanPredicand() }
+{ nonparenthesizedValueExpressionPrimary()  | commonValueExpression() | boleanPredicand() }
 
 void boleanPredicand() :
 {}
-{ "(" booleanValueExpression() ")"
-  | nonparenthesizedValueExpressionPrimary() }
+{ "(" booleanValueExpression() ")" | nonparenthesizedValueExpressionPrimary() }
 
