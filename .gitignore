@@ -10,10 +10,8 @@ TestResults
 *.csproj.user
 StyleCop.Cache
 *.resources
-*.~
 *.*~
 *~
-*.java
 /build/
 /dist/
 /nbproject/private/
