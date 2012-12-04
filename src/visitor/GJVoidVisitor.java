@@ -39,26 +39,36 @@ public interface GJVoidVisitor<A> {
    public void visit(queryList n, A argu);
 
    /**
-    * f0 -> "SELECT"
+    * f0 -> select()
     * f1 -> selectList()
-    * f2 -> "FROM"
-    * f3 -> <identifier>
-    * f4 -> [ "WHERE" booleanValueExpression() ]
-    * f5 -> [ "GROUP BY" <identifier> ]
-    * f6 -> [ "ORDER BY" commonValueExpression() [ "ASC" | "DESC" ] ]
+    * f2 -> from()
+    * f3 -> identifier()
+    * f4 -> [ where() booleanValueExpression() ]
+    * f5 -> [ groupby() identifier() ]
+    * f6 -> [ orderby() commonValueExpression() [ asc() | desc() ] ]
     * f7 -> ";"
     */
    public void visit(querySpecification n, A argu);
 
    /**
-    * f0 -> "*"
+    * f0 -> <SELECT>
+    */
+   public void visit(select n, A argu);
+
+   /**
+    * f0 -> asterisk()
     *       | derivedColumn() ( "," derivedColumn() )*
     */
    public void visit(selectList n, A argu);
 
    /**
+    * f0 -> <asterisk>
+    */
+   public void visit(asterisk n, A argu);
+
+   /**
     * f0 -> commonValueExpression()
-    * f1 -> [ [ "AS" ] <identifier> ]
+    * f1 -> [ [ as() ] identifier() ]
     */
    public void visit(derivedColumn n, A argu);
 
@@ -69,11 +79,31 @@ public interface GJVoidVisitor<A> {
    public void visit(commonValueExpression n, A argu);
 
    /**
-    * f0 -> <identifier>
+    * f0 -> identifier()
     *       | <setfunctiontype> "(" commonValueExpression() ")"
     *       | <number>
     */
    public void visit(nonparenthesizedValueExpressionPrimary n, A argu);
+
+   /**
+    * f0 -> <AS>
+    */
+   public void visit(as n, A argu);
+
+   /**
+    * f0 -> <FROM>
+    */
+   public void visit(from n, A argu);
+
+   /**
+    * f0 -> <identifier>
+    */
+   public void visit(identifier n, A argu);
+
+   /**
+    * f0 -> <WHERE>
+    */
+   public void visit(where n, A argu);
 
    /**
     * f0 -> booleanTerm()
@@ -82,9 +112,14 @@ public interface GJVoidVisitor<A> {
    public void visit(booleanValueExpression n, A argu);
 
    /**
-    * f0 -> ( "OR" booleanTerm() booleanValueExpressionPrime() )?
+    * f0 -> ( or() booleanTerm() booleanValueExpressionPrime() )?
     */
    public void visit(booleanValueExpressionPrime n, A argu);
+
+   /**
+    * f0 -> <OR>
+    */
+   public void visit(or n, A argu);
 
    /**
     * f0 -> booleanFactor()
@@ -93,23 +128,52 @@ public interface GJVoidVisitor<A> {
    public void visit(booleanTerm n, A argu);
 
    /**
-    * f0 -> ( "AND" booleanFactor() booleanTermPrime() )?
+    * f0 -> ( and() booleanFactor() booleanTermPrime() )?
     */
    public void visit(booleanTermPrime n, A argu);
 
    /**
-    * f0 -> [ "NOT" ]
+    * f0 -> <AND>
+    */
+   public void visit(and n, A argu);
+
+   /**
+    * f0 -> [ not() ]
     * f1 -> boleanPredicand()
     * f2 -> [ <compop> boleanPredicand() ]
-    * f3 -> [ "IS" [ "NOT" ] <truthValue> ]
     */
    public void visit(booleanFactor n, A argu);
+
+   /**
+    * f0 -> <NOT>
+    */
+   public void visit(not n, A argu);
 
    /**
     * f0 -> "(" booleanValueExpression() ")"
     *       | nonparenthesizedValueExpressionPrimary()
     */
    public void visit(boleanPredicand n, A argu);
+
+   /**
+    * f0 -> <GROUPBY>
+    */
+   public void visit(groupby n, A argu);
+
+   /**
+    * f0 -> <ORDERBY>
+    */
+   public void visit(orderby n, A argu);
+
+   /**
+    * f0 -> <ASC>
+    */
+   public void visit(asc n, A argu);
+
+   /**
+    * f0 -> <DESC>
+    */
+   public void visit(desc n, A argu);
 
 }
 

@@ -6,15 +6,17 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> identifier()
- *       | <setfunctiontype> "(" commonValueExpression() ")"
- *       | <number>
+ * f0 -> <DESC>
  */
-public class nonparenthesizedValueExpressionPrimary implements Node {
-   public NodeChoice f0;
+public class desc implements Node {
+   public NodeToken f0;
 
-   public nonparenthesizedValueExpressionPrimary(NodeChoice n0) {
+   public desc(NodeToken n0) {
       f0 = n0;
+   }
+
+   public desc() {
+      f0 = new NodeToken("DESC");
    }
 
    public void accept(visitor.Visitor v) {

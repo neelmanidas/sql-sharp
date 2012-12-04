@@ -6,22 +6,19 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> [ "NOT" ]
+ * f0 -> [ not() ]
  * f1 -> boleanPredicand()
  * f2 -> [ <compop> boleanPredicand() ]
- * f3 -> [ "IS" [ "NOT" ] <truthValue> ]
  */
 public class booleanFactor implements Node {
    public NodeOptional f0;
    public boleanPredicand f1;
    public NodeOptional f2;
-   public NodeOptional f3;
 
-   public booleanFactor(NodeOptional n0, boleanPredicand n1, NodeOptional n2, NodeOptional n3) {
+   public booleanFactor(NodeOptional n0, boleanPredicand n1, NodeOptional n2) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
-      f3 = n3;
    }
 
    public void accept(visitor.Visitor v) {

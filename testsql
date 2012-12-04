@@ -1,1 +1,1 @@
-SELECT * FROM tabla GROUP BY c0 ORDER BY c1;
+SELECT nombre,edad,COUNT(grupo) FROM tabla WHERE edad >= 18 GROUP BY edad ORDER BY edad;

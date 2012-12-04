@@ -1,6 +1,6 @@
 <query list> := <query specification> [ { <query specification> }... ]
 
-<query specification> ::= SELECT <select list> FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <identifier> ] [ ORDER BY <sort specification list> ] <semicolon>
+<query specification> ::= SELECT <select list> FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <identifier> ] [ ORDER BY <value expression> [ ASC | DESC ] ] <semicolon>
 
 <select list> ::= <asterisk> | <derived column> [ { <comma> <derived column> }... ]
 
@@ -47,5 +47,3 @@
 <truth value> ::= TRUE | FALSE | UNKNOWN
 
 <semicolon> :: = ;
-
-<sort specification list> :: = <value expression> [ ASC | DESC ] [ <NULLS FIRST | NULLS LAST> ]

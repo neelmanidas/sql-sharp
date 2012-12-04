@@ -28,7 +28,6 @@ TOKEN : {
     |   < number: ( "+" | "-" )? ( <integer> | <real> ) >
     |	< OR: "OR">
     |	< AND: "AND">
-    |	< truthValue: "TRUE" | "FALSE" | "UNKNOWN" >
     |	<semicolon: ";">
     |	< IS: "IS">
     |	< NOT: "NOT">
@@ -50,15 +49,23 @@ void queryList() :
 
 void querySpecification() :
 {}
-{ "SELECT" selectList() "FROM" <identifier> [ "WHERE" booleanValueExpression() ] [ "GROUP BY" <identifier> ] [ "ORDER BY" commonValueExpression() [ "ASC" | "DESC" ] ]";" }
+{ select() selectList() from() identifier() [ where() booleanValueExpression() ] [ groupby() identifier() ] [ orderby() commonValueExpression() [ asc() | desc() ] ]";" }
+
+void select() :
+{}
+{ <SELECT> }
 
 void selectList() :
 {}
-{ "*" | derivedColumn() ( "," derivedColumn() )* }
+{ asterisk() | derivedColumn() ( "," derivedColumn() )* }
+
+void asterisk() :
+{}
+{ <asterisk> }
 
 void derivedColumn() :
 {}
-{ commonValueExpression() [ ["AS"] <identifier> ] }
+{ commonValueExpression() [ [as()] identifier() ] }
 
 void commonValueExpression() :
 {}
@@ -66,7 +73,23 @@ void commonValueExpression() :
 
 void nonparenthesizedValueExpressionPrimary() :
 {}
-{ <identifier> | <setfunctiontype> "(" commonValueExpression() ")" | <number> }
+{ identifier() | <setfunctiontype> "(" commonValueExpression() ")" | <number> }
+
+void as() :
+{}
+{ <AS> }
+
+void from() :
+{}
+{ <FROM> }
+
+void identifier() :
+{}
+{ <identifier> }
+
+void where() :
+{}
+{ <WHERE> }
 
 void booleanValueExpression() :
 {}
@@ -74,7 +97,11 @@ void booleanValueExpression() :
 
 void booleanValueExpressionPrime() :
 {}
-{ ( "OR" booleanTerm() booleanValueExpressionPrime() )? }
+{ ( or() booleanTerm() booleanValueExpressionPrime() )? }
+
+void or() :
+{}
+{ <OR> }
 
 void booleanTerm() :
 {}
@@ -82,13 +109,37 @@ void booleanTerm() :
 
 void booleanTermPrime() :
 {}
-{ ("AND" booleanFactor() booleanTermPrime())? }
+{ ( and() booleanFactor() booleanTermPrime())? }
+
+void and() :
+{}
+{ <AND> }
 
 void booleanFactor() : 
 {}
-{ ["NOT"] boleanPredicand() [<compop> boleanPredicand()] [ "IS" ["NOT"] <truthValue> ] }
+{ [not()] boleanPredicand() [<compop> boleanPredicand()] }
+
+void not() :
+{}
+{ <NOT> }
 
 void boleanPredicand() :
 {}
 { "(" booleanValueExpression() ")" | nonparenthesizedValueExpressionPrimary() }
+
+void groupby() :
+{}
+{ <GROUPBY> }
+
+void orderby() :
+{}
+{ <ORDERBY> }
+
+void asc() :
+{}
+{ <ASC> }
+
+void desc() :
+{}
+{ <DESC> }
 

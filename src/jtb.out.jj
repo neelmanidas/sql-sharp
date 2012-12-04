@@ -50,7 +50,6 @@ TOKEN :
    | <number: ("+" | "-")? (<integer> | <real>)>
    | <OR: "OR">
    | <AND: "AND">
-   | <truthValue: "TRUE" | "FALSE" | "UNKNOWN">
    | <semicolon: ";">
    | <IS: "IS">
    | <NOT: "NOT">
@@ -101,123 +100,139 @@ queryList queryList() :
 
 querySpecification querySpecification() :
 {
-   NodeToken n0;
-   Token n1;
-   selectList n2;
-   NodeToken n3;
-   Token n4;
-   NodeToken n5;
-   Token n6;
-   NodeOptional n7 = new NodeOptional();
-   NodeSequence n8;
-   NodeToken n9;
-   Token n10;
-   booleanValueExpression n11;
+   select n0;
+   selectList n1;
+   from n2;
+   identifier n3;
+   NodeOptional n4 = new NodeOptional();
+   NodeSequence n5;
+   where n6;
+   booleanValueExpression n7;
+   NodeOptional n8 = new NodeOptional();
+   NodeSequence n9;
+   groupby n10;
+   identifier n11;
    NodeOptional n12 = new NodeOptional();
    NodeSequence n13;
-   NodeToken n14;
-   Token n15;
-   NodeToken n16;
-   Token n17;
-   NodeOptional n18 = new NodeOptional();
-   NodeSequence n19;
+   orderby n14;
+   commonValueExpression n15;
+   NodeOptional n16;
+   NodeChoice n17;
+   asc n18;
+   desc n19;
    NodeToken n20;
    Token n21;
-   commonValueExpression n22;
-   NodeOptional n23;
-   NodeChoice n24;
-   NodeToken n25;
-   Token n26;
-   NodeToken n27;
-   Token n28;
-   NodeToken n29;
-   Token n30;
 
    
 }
 {
-   n1="SELECT" { n0 = JTBToolkit.makeNodeToken(n1); }
-   n2=selectList()
-   n4="FROM" { n3 = JTBToolkit.makeNodeToken(n4); }
-   n6=<identifier> { n5 = JTBToolkit.makeNodeToken(n6); }
+   n0=select()
+   n1=selectList()
+   n2=from()
+   n3=identifier()
    (
-      { n8 = new NodeSequence(2); }
-      n10="WHERE" { n9 = JTBToolkit.makeNodeToken(n10); }
-      { n8.addNode(n9); }
-      n11=booleanValueExpression()
-      { n8.addNode(n11); }
-      { n7.addNode(n8); }
+      { n5 = new NodeSequence(2); }
+      n6=where()
+      { n5.addNode(n6); }
+      n7=booleanValueExpression()
+      { n5.addNode(n7); }
+      { n4.addNode(n5); }
    )?
    (
-      { n13 = new NodeSequence(2); }
-      n15="GROUP BY" { n14 = JTBToolkit.makeNodeToken(n15); }
+      { n9 = new NodeSequence(2); }
+      n10=groupby()
+      { n9.addNode(n10); }
+      n11=identifier()
+      { n9.addNode(n11); }
+      { n8.addNode(n9); }
+   )?
+   (
+      { n16 = new NodeOptional(); }
+      { n13 = new NodeSequence(3); }
+      n14=orderby()
       { n13.addNode(n14); }
-      n17=<identifier> { n16 = JTBToolkit.makeNodeToken(n17); }
+      n15=commonValueExpression()
+      { n13.addNode(n15); }
+      (
+         (
+            n18=asc()
+            { n17 = new NodeChoice(n18, 0); }
+         |
+            n19=desc()
+            { n17 = new NodeChoice(n19, 1); }
+         )
+         { n16.addNode(n17); }
+      )?
       { n13.addNode(n16); }
       { n12.addNode(n13); }
    )?
-   (
-      { n23 = new NodeOptional(); }
-      { n19 = new NodeSequence(3); }
-      n21="ORDER BY" { n20 = JTBToolkit.makeNodeToken(n21); }
-      { n19.addNode(n20); }
-      n22=commonValueExpression()
-      { n19.addNode(n22); }
-      (
-         (
-            n26="ASC" { n25 = JTBToolkit.makeNodeToken(n26); }
-            { n24 = new NodeChoice(n25, 0); }
-         |
-            n28="DESC" { n27 = JTBToolkit.makeNodeToken(n28); }
-            { n24 = new NodeChoice(n27, 1); }
-         )
-         { n23.addNode(n24); }
-      )?
-      { n19.addNode(n23); }
-      { n18.addNode(n19); }
-   )?
-   n30=";" { n29 = JTBToolkit.makeNodeToken(n30); }
+   n21=";" { n20 = JTBToolkit.makeNodeToken(n21); }
    
-   { return new querySpecification(n0,n2,n3,n5,n7,n12,n18,n29); }
+   { return new querySpecification(n0,n1,n2,n3,n4,n8,n12,n20); }
+}
+
+select select() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<SELECT> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new select(n0); }
 }
 
 selectList selectList() :
 {
    NodeChoice n0;
-   NodeToken n1;
-   Token n2;
-   NodeSequence n3;
-   derivedColumn n4;
-   NodeListOptional n5 = new NodeListOptional();
-   NodeSequence n6;
-   NodeToken n7;
-   Token n8;
-   derivedColumn n9;
+   asterisk n1;
+   NodeSequence n2;
+   derivedColumn n3;
+   NodeListOptional n4 = new NodeListOptional();
+   NodeSequence n5;
+   NodeToken n6;
+   Token n7;
+   derivedColumn n8;
 
    
 }
 {
    (
-      n2="*" { n1 = JTBToolkit.makeNodeToken(n2); }
+      n1=asterisk()
       { n0 = new NodeChoice(n1, 0); }
    |
-      { n3 = new NodeSequence(2); }
-      n4=derivedColumn()
-      { n3.addNode(n4); }
+      { n2 = new NodeSequence(2); }
+      n3=derivedColumn()
+      { n2.addNode(n3); }
       (
-         { n6 = new NodeSequence(2); }
-         n8="," { n7 = JTBToolkit.makeNodeToken(n8); }
-         { n6.addNode(n7); }
-         n9=derivedColumn()
-         { n6.addNode(n9); }
+         { n5 = new NodeSequence(2); }
+         n7="," { n6 = JTBToolkit.makeNodeToken(n7); }
          { n5.addNode(n6); }
+         n8=derivedColumn()
+         { n5.addNode(n8); }
+         { n4.addNode(n5); }
       )*
-      { n5.nodes.trimToSize(); }
-      { n3.addNode(n5); }
-      { n0 = new NodeChoice(n3, 1); }
+      { n4.nodes.trimToSize(); }
+      { n2.addNode(n4); }
+      { n0 = new NodeChoice(n2, 1); }
    )
    
    { return new selectList(n0); }
+}
+
+asterisk asterisk() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<asterisk> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new asterisk(n0); }
 }
 
 derivedColumn derivedColumn() :
@@ -226,10 +241,8 @@ derivedColumn derivedColumn() :
    NodeOptional n1 = new NodeOptional();
    NodeSequence n2;
    NodeOptional n3;
-   NodeToken n4;
-   Token n5;
-   NodeToken n6;
-   Token n7;
+   as n4;
+   identifier n5;
 
    
 }
@@ -239,12 +252,12 @@ derivedColumn derivedColumn() :
       { n3 = new NodeOptional(); }
       { n2 = new NodeSequence(2); }
       (
-         n5="AS" { n4 = JTBToolkit.makeNodeToken(n5); }
+         n4=as()
          { n3.addNode(n4); }
       )?
       { n2.addNode(n3); }
-      n7=<identifier> { n6 = JTBToolkit.makeNodeToken(n7); }
-      { n2.addNode(n6); }
+      n5=identifier()
+      { n2.addNode(n5); }
       { n1.addNode(n2); }
    )?
    
@@ -285,42 +298,93 @@ commonValueExpression commonValueExpression() :
 nonparenthesizedValueExpressionPrimary nonparenthesizedValueExpressionPrimary() :
 {
    NodeChoice n0;
-   NodeToken n1;
-   Token n2;
-   NodeSequence n3;
-   NodeToken n4;
-   Token n5;
-   NodeToken n6;
-   Token n7;
-   commonValueExpression n8;
-   NodeToken n9;
-   Token n10;
-   NodeToken n11;
-   Token n12;
+   identifier n1;
+   NodeSequence n2;
+   NodeToken n3;
+   Token n4;
+   NodeToken n5;
+   Token n6;
+   commonValueExpression n7;
+   NodeToken n8;
+   Token n9;
+   NodeToken n10;
+   Token n11;
 
    
 }
 {
    (
-      n2=<identifier> { n1 = JTBToolkit.makeNodeToken(n2); }
+      n1=identifier()
       { n0 = new NodeChoice(n1, 0); }
    |
-      { n3 = new NodeSequence(4); }
-      n5=<setfunctiontype> { n4 = JTBToolkit.makeNodeToken(n5); }
-      { n3.addNode(n4); }
-      n7="(" { n6 = JTBToolkit.makeNodeToken(n7); }
-      { n3.addNode(n6); }
-      n8=commonValueExpression()
-      { n3.addNode(n8); }
-      n10=")" { n9 = JTBToolkit.makeNodeToken(n10); }
-      { n3.addNode(n9); }
-      { n0 = new NodeChoice(n3, 1); }
+      { n2 = new NodeSequence(4); }
+      n4=<setfunctiontype> { n3 = JTBToolkit.makeNodeToken(n4); }
+      { n2.addNode(n3); }
+      n6="(" { n5 = JTBToolkit.makeNodeToken(n6); }
+      { n2.addNode(n5); }
+      n7=commonValueExpression()
+      { n2.addNode(n7); }
+      n9=")" { n8 = JTBToolkit.makeNodeToken(n9); }
+      { n2.addNode(n8); }
+      { n0 = new NodeChoice(n2, 1); }
    |
-      n12=<number> { n11 = JTBToolkit.makeNodeToken(n12); }
-      { n0 = new NodeChoice(n11, 2); }
+      n11=<number> { n10 = JTBToolkit.makeNodeToken(n11); }
+      { n0 = new NodeChoice(n10, 2); }
    )
    
    { return new nonparenthesizedValueExpressionPrimary(n0); }
+}
+
+as as() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<AS> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new as(n0); }
+}
+
+from from() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<FROM> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new from(n0); }
+}
+
+identifier identifier() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<identifier> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new identifier(n0); }
+}
+
+where where() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<WHERE> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new where(n0); }
 }
 
 booleanValueExpression booleanValueExpression() :
@@ -341,26 +405,38 @@ booleanValueExpressionPrime booleanValueExpressionPrime() :
 {
    NodeOptional n0 = new NodeOptional();
    NodeSequence n1;
-   NodeToken n2;
-   Token n3;
-   booleanTerm n4;
-   booleanValueExpressionPrime n5;
+   or n2;
+   booleanTerm n3;
+   booleanValueExpressionPrime n4;
 
    
 }
 {
    (
       { n1 = new NodeSequence(3); }
-      n3="OR" { n2 = JTBToolkit.makeNodeToken(n3); }
+      n2=or()
       { n1.addNode(n2); }
-      n4=booleanTerm()
+      n3=booleanTerm()
+      { n1.addNode(n3); }
+      n4=booleanValueExpressionPrime()
       { n1.addNode(n4); }
-      n5=booleanValueExpressionPrime()
-      { n1.addNode(n5); }
       { n0.addNode(n1); }
    )?
    
    { return new booleanValueExpressionPrime(n0); }
+}
+
+or or() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<OR> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new or(n0); }
 }
 
 booleanTerm booleanTerm() :
@@ -381,81 +457,82 @@ booleanTermPrime booleanTermPrime() :
 {
    NodeOptional n0 = new NodeOptional();
    NodeSequence n1;
-   NodeToken n2;
-   Token n3;
-   booleanFactor n4;
-   booleanTermPrime n5;
+   and n2;
+   booleanFactor n3;
+   booleanTermPrime n4;
 
    
 }
 {
    (
       { n1 = new NodeSequence(3); }
-      n3="AND" { n2 = JTBToolkit.makeNodeToken(n3); }
+      n2=and()
       { n1.addNode(n2); }
-      n4=booleanFactor()
+      n3=booleanFactor()
+      { n1.addNode(n3); }
+      n4=booleanTermPrime()
       { n1.addNode(n4); }
-      n5=booleanTermPrime()
-      { n1.addNode(n5); }
       { n0.addNode(n1); }
    )?
    
    { return new booleanTermPrime(n0); }
 }
 
+and and() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<AND> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new and(n0); }
+}
+
 booleanFactor booleanFactor() :
 {
    NodeOptional n0 = new NodeOptional();
-   NodeToken n1;
-   Token n2;
-   boleanPredicand n3;
-   NodeOptional n4 = new NodeOptional();
-   NodeSequence n5;
-   NodeToken n6;
-   Token n7;
-   boleanPredicand n8;
-   NodeOptional n9 = new NodeOptional();
-   NodeSequence n10;
-   NodeToken n11;
-   Token n12;
-   NodeOptional n13;
-   NodeToken n14;
-   Token n15;
-   NodeToken n16;
-   Token n17;
+   not n1;
+   boleanPredicand n2;
+   NodeOptional n3 = new NodeOptional();
+   NodeSequence n4;
+   NodeToken n5;
+   Token n6;
+   boleanPredicand n7;
 
    
 }
 {
    (
-      n2="NOT" { n1 = JTBToolkit.makeNodeToken(n2); }
+      n1=not()
       { n0.addNode(n1); }
    )?
-   n3=boleanPredicand()
+   n2=boleanPredicand()
    (
-      { n5 = new NodeSequence(2); }
-      n7=<compop> { n6 = JTBToolkit.makeNodeToken(n7); }
-      { n5.addNode(n6); }
-      n8=boleanPredicand()
-      { n5.addNode(n8); }
+      { n4 = new NodeSequence(2); }
+      n6=<compop> { n5 = JTBToolkit.makeNodeToken(n6); }
       { n4.addNode(n5); }
-   )?
-   (
-      { n13 = new NodeOptional(); }
-      { n10 = new NodeSequence(3); }
-      n12="IS" { n11 = JTBToolkit.makeNodeToken(n12); }
-      { n10.addNode(n11); }
-      (
-         n15="NOT" { n14 = JTBToolkit.makeNodeToken(n15); }
-         { n13.addNode(n14); }
-      )?
-      { n10.addNode(n13); }
-      n17=<truthValue> { n16 = JTBToolkit.makeNodeToken(n17); }
-      { n10.addNode(n16); }
-      { n9.addNode(n10); }
+      n7=boleanPredicand()
+      { n4.addNode(n7); }
+      { n3.addNode(n4); }
    )?
    
-   { return new booleanFactor(n0,n3,n4,n9); }
+   { return new booleanFactor(n0,n2,n3); }
+}
+
+not not() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<NOT> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new not(n0); }
 }
 
 boleanPredicand boleanPredicand() :
@@ -487,4 +564,56 @@ boleanPredicand boleanPredicand() :
    )
    
    { return new boleanPredicand(n0); }
+}
+
+groupby groupby() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<GROUPBY> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new groupby(n0); }
+}
+
+orderby orderby() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<ORDERBY> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new orderby(n0); }
+}
+
+asc asc() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<ASC> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new asc(n0); }
+}
+
+desc desc() :
+{
+   NodeToken n0;
+   Token n1;
+
+   
+}
+{
+   n1=<DESC> { n0 = JTBToolkit.makeNodeToken(n1); }
+   
+   { return new desc(n0); }
 }

@@ -6,15 +6,17 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> identifier()
- *       | <setfunctiontype> "(" commonValueExpression() ")"
- *       | <number>
+ * f0 -> <GROUPBY>
  */
-public class nonparenthesizedValueExpressionPrimary implements Node {
-   public NodeChoice f0;
+public class groupby implements Node {
+   public NodeToken f0;
 
-   public nonparenthesizedValueExpressionPrimary(NodeChoice n0) {
+   public groupby(NodeToken n0) {
       f0 = n0;
+   }
+
+   public groupby() {
+      f0 = new NodeToken("GROUP BY");
    }
 
    public void accept(visitor.Visitor v) {

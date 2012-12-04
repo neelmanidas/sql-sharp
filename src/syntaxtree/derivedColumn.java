@@ -7,7 +7,7 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> commonValueExpression()
- * f1 -> [ [ "AS" ] <identifier> ]
+ * f1 -> [ [ as() ] identifier() ]
  */
 public class derivedColumn implements Node {
    public commonValueExpression f0;

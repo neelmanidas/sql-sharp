@@ -6,7 +6,7 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> "*"
+ * f0 -> asterisk()
  *       | derivedColumn() ( "," derivedColumn() )*
  */
 public class selectList implements Node {

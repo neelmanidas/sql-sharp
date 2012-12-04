@@ -41,53 +41,40 @@ class SQLParser implements SQLParserConstants {
   }
 
   final public querySpecification querySpecification() throws ParseException {
-   NodeToken n0;
-   Token n1;
-   selectList n2;
-   NodeToken n3;
-   Token n4;
-   NodeToken n5;
-   Token n6;
-   NodeOptional n7 = new NodeOptional();
-   NodeSequence n8;
-   NodeToken n9;
-   Token n10;
-   booleanValueExpression n11;
+   select n0;
+   selectList n1;
+   from n2;
+   identifier n3;
+   NodeOptional n4 = new NodeOptional();
+   NodeSequence n5;
+   where n6;
+   booleanValueExpression n7;
+   NodeOptional n8 = new NodeOptional();
+   NodeSequence n9;
+   groupby n10;
+   identifier n11;
    NodeOptional n12 = new NodeOptional();
    NodeSequence n13;
-   NodeToken n14;
-   Token n15;
-   NodeToken n16;
-   Token n17;
-   NodeOptional n18 = new NodeOptional();
-   NodeSequence n19;
+   orderby n14;
+   commonValueExpression n15;
+   NodeOptional n16;
+   NodeChoice n17;
+   asc n18;
+   desc n19;
    NodeToken n20;
    Token n21;
-   commonValueExpression n22;
-   NodeOptional n23;
-   NodeChoice n24;
-   NodeToken n25;
-   Token n26;
-   NodeToken n27;
-   Token n28;
-   NodeToken n29;
-   Token n30;
-    n1 = jj_consume_token(SELECT);
-                 n0 = JTBToolkit.makeNodeToken(n1);
-    n2 = selectList();
-    n4 = jj_consume_token(FROM);
-               n3 = JTBToolkit.makeNodeToken(n4);
-    n6 = jj_consume_token(identifier);
-                     n5 = JTBToolkit.makeNodeToken(n6);
+    n0 = select();
+    n1 = selectList();
+    n2 = from();
+    n3 = identifier();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case WHERE:
-        n8 = new NodeSequence(2);
-      n10 = jj_consume_token(WHERE);
-                    n9 = JTBToolkit.makeNodeToken(n10);
-        n8.addNode(n9);
-      n11 = booleanValueExpression();
-        n8.addNode(n11);
-        n7.addNode(n8);
+        n5 = new NodeSequence(2);
+      n6 = where();
+        n5.addNode(n6);
+      n7 = booleanValueExpression();
+        n5.addNode(n7);
+        n4.addNode(n5);
       break;
     default:
       jj_la1[1] = jj_gen;
@@ -95,14 +82,12 @@ class SQLParser implements SQLParserConstants {
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case GROUPBY:
-        n13 = new NodeSequence(2);
-      n15 = jj_consume_token(GROUPBY);
-                       n14 = JTBToolkit.makeNodeToken(n15);
-        n13.addNode(n14);
-      n17 = jj_consume_token(identifier);
-                         n16 = JTBToolkit.makeNodeToken(n17);
-        n13.addNode(n16);
-        n12.addNode(n13);
+        n9 = new NodeSequence(2);
+      n10 = groupby();
+        n9.addNode(n10);
+      n11 = identifier();
+        n9.addNode(n11);
+        n8.addNode(n9);
       break;
     default:
       jj_la1[2] = jj_gen;
@@ -110,75 +95,79 @@ class SQLParser implements SQLParserConstants {
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ORDERBY:
-        n23 = new NodeOptional();
-        n19 = new NodeSequence(3);
-      n21 = jj_consume_token(ORDERBY);
-                       n20 = JTBToolkit.makeNodeToken(n21);
-        n19.addNode(n20);
-      n22 = commonValueExpression();
-        n19.addNode(n22);
+        n16 = new NodeOptional();
+        n13 = new NodeSequence(3);
+      n14 = orderby();
+        n13.addNode(n14);
+      n15 = commonValueExpression();
+        n13.addNode(n15);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ASC:
       case DESC:
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case ASC:
-          n26 = jj_consume_token(ASC);
-                        n25 = JTBToolkit.makeNodeToken(n26);
-              n24 = new NodeChoice(n25, 0);
+          n18 = asc();
+              n17 = new NodeChoice(n18, 0);
           break;
         case DESC:
-          n28 = jj_consume_token(DESC);
-                         n27 = JTBToolkit.makeNodeToken(n28);
-              n24 = new NodeChoice(n27, 1);
+          n19 = desc();
+              n17 = new NodeChoice(n19, 1);
           break;
         default:
           jj_la1[3] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
-           n23.addNode(n24);
+           n16.addNode(n17);
         break;
       default:
         jj_la1[4] = jj_gen;
         ;
       }
-        n19.addNode(n23);
-        n18.addNode(n19);
+        n13.addNode(n16);
+        n12.addNode(n13);
       break;
     default:
       jj_la1[5] = jj_gen;
       ;
     }
-    n30 = jj_consume_token(semicolon);
-             n29 = JTBToolkit.makeNodeToken(n30);
-     {if (true) return new querySpecification(n0,n2,n3,n5,n7,n12,n18,n29);}
+    n21 = jj_consume_token(semicolon);
+             n20 = JTBToolkit.makeNodeToken(n21);
+     {if (true) return new querySpecification(n0,n1,n2,n3,n4,n8,n12,n20);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public select select() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(SELECT);
+                 n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new select(n0);}
     throw new Error("Missing return statement in function");
   }
 
   final public selectList selectList() throws ParseException {
    NodeChoice n0;
-   NodeToken n1;
-   Token n2;
-   NodeSequence n3;
-   derivedColumn n4;
-   NodeListOptional n5 = new NodeListOptional();
-   NodeSequence n6;
-   NodeToken n7;
-   Token n8;
-   derivedColumn n9;
+   asterisk n1;
+   NodeSequence n2;
+   derivedColumn n3;
+   NodeListOptional n4 = new NodeListOptional();
+   NodeSequence n5;
+   NodeToken n6;
+   Token n7;
+   derivedColumn n8;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case asterisk:
-      n2 = jj_consume_token(asterisk);
-               n1 = JTBToolkit.makeNodeToken(n2);
+      n1 = asterisk();
         n0 = new NodeChoice(n1, 0);
       break;
     case identifier:
     case leftparen:
     case setfunctiontype:
     case number:
-        n3 = new NodeSequence(2);
-      n4 = derivedColumn();
-        n3.addNode(n4);
+        n2 = new NodeSequence(2);
+      n3 = derivedColumn();
+        n2.addNode(n3);
       label_2:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -189,17 +178,17 @@ class SQLParser implements SQLParserConstants {
           jj_la1[6] = jj_gen;
           break label_2;
         }
-           n6 = new NodeSequence(2);
-        n8 = jj_consume_token(comma);
-                  n7 = JTBToolkit.makeNodeToken(n8);
-           n6.addNode(n7);
-        n9 = derivedColumn();
-           n6.addNode(n9);
+           n5 = new NodeSequence(2);
+        n7 = jj_consume_token(comma);
+                  n6 = JTBToolkit.makeNodeToken(n7);
            n5.addNode(n6);
+        n8 = derivedColumn();
+           n5.addNode(n8);
+           n4.addNode(n5);
       }
-        n5.nodes.trimToSize();
-        n3.addNode(n5);
-        n0 = new NodeChoice(n3, 1);
+        n4.nodes.trimToSize();
+        n2.addNode(n4);
+        n0 = new NodeChoice(n2, 1);
       break;
     default:
       jj_la1[7] = jj_gen;
@@ -210,15 +199,22 @@ class SQLParser implements SQLParserConstants {
     throw new Error("Missing return statement in function");
   }
 
+  final public asterisk asterisk() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(asterisk);
+                   n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new asterisk(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
   final public derivedColumn derivedColumn() throws ParseException {
    commonValueExpression n0;
    NodeOptional n1 = new NodeOptional();
    NodeSequence n2;
    NodeOptional n3;
-   NodeToken n4;
-   Token n5;
-   NodeToken n6;
-   Token n7;
+   as n4;
+   identifier n5;
     n0 = commonValueExpression();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case identifier:
@@ -227,8 +223,7 @@ class SQLParser implements SQLParserConstants {
         n2 = new NodeSequence(2);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case AS:
-        n5 = jj_consume_token(AS);
-                   n4 = JTBToolkit.makeNodeToken(n5);
+        n4 = as();
            n3.addNode(n4);
         break;
       default:
@@ -236,9 +231,8 @@ class SQLParser implements SQLParserConstants {
         ;
       }
         n2.addNode(n3);
-      n7 = jj_consume_token(identifier);
-                        n6 = JTBToolkit.makeNodeToken(n7);
-        n2.addNode(n6);
+      n5 = identifier();
+        n2.addNode(n5);
         n1.addNode(n2);
       break;
     default:
@@ -288,43 +282,41 @@ class SQLParser implements SQLParserConstants {
 
   final public nonparenthesizedValueExpressionPrimary nonparenthesizedValueExpressionPrimary() throws ParseException {
    NodeChoice n0;
-   NodeToken n1;
-   Token n2;
-   NodeSequence n3;
-   NodeToken n4;
-   Token n5;
-   NodeToken n6;
-   Token n7;
-   commonValueExpression n8;
-   NodeToken n9;
-   Token n10;
-   NodeToken n11;
-   Token n12;
+   identifier n1;
+   NodeSequence n2;
+   NodeToken n3;
+   Token n4;
+   NodeToken n5;
+   Token n6;
+   commonValueExpression n7;
+   NodeToken n8;
+   Token n9;
+   NodeToken n10;
+   Token n11;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case identifier:
-      n2 = jj_consume_token(identifier);
-                        n1 = JTBToolkit.makeNodeToken(n2);
+      n1 = identifier();
         n0 = new NodeChoice(n1, 0);
       break;
     case setfunctiontype:
-        n3 = new NodeSequence(4);
-      n5 = jj_consume_token(setfunctiontype);
-                             n4 = JTBToolkit.makeNodeToken(n5);
-        n3.addNode(n4);
-      n7 = jj_consume_token(leftparen);
-               n6 = JTBToolkit.makeNodeToken(n7);
-        n3.addNode(n6);
-      n8 = commonValueExpression();
-        n3.addNode(n8);
-      n10 = jj_consume_token(rightparen);
-                n9 = JTBToolkit.makeNodeToken(n10);
-        n3.addNode(n9);
-        n0 = new NodeChoice(n3, 1);
+        n2 = new NodeSequence(4);
+      n4 = jj_consume_token(setfunctiontype);
+                             n3 = JTBToolkit.makeNodeToken(n4);
+        n2.addNode(n3);
+      n6 = jj_consume_token(leftparen);
+               n5 = JTBToolkit.makeNodeToken(n6);
+        n2.addNode(n5);
+      n7 = commonValueExpression();
+        n2.addNode(n7);
+      n9 = jj_consume_token(rightparen);
+               n8 = JTBToolkit.makeNodeToken(n9);
+        n2.addNode(n8);
+        n0 = new NodeChoice(n2, 1);
       break;
     case number:
-      n12 = jj_consume_token(number);
-                     n11 = JTBToolkit.makeNodeToken(n12);
-        n0 = new NodeChoice(n11, 2);
+      n11 = jj_consume_token(number);
+                     n10 = JTBToolkit.makeNodeToken(n11);
+        n0 = new NodeChoice(n10, 2);
       break;
     default:
       jj_la1[11] = jj_gen;
@@ -332,6 +324,42 @@ class SQLParser implements SQLParserConstants {
       throw new ParseException();
     }
      {if (true) return new nonparenthesizedValueExpressionPrimary(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public as as() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(AS);
+             n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new as(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public from from() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(FROM);
+               n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new from(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public identifier identifier() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(identifier);
+                     n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new identifier(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public where where() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(WHERE);
+                n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new where(n0);}
     throw new Error("Missing return statement in function");
   }
 
@@ -347,20 +375,18 @@ class SQLParser implements SQLParserConstants {
   final public booleanValueExpressionPrime booleanValueExpressionPrime() throws ParseException {
    NodeOptional n0 = new NodeOptional();
    NodeSequence n1;
-   NodeToken n2;
-   Token n3;
-   booleanTerm n4;
-   booleanValueExpressionPrime n5;
+   or n2;
+   booleanTerm n3;
+   booleanValueExpressionPrime n4;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case OR:
         n1 = new NodeSequence(3);
-      n3 = jj_consume_token(OR);
-                n2 = JTBToolkit.makeNodeToken(n3);
+      n2 = or();
         n1.addNode(n2);
-      n4 = booleanTerm();
+      n3 = booleanTerm();
+        n1.addNode(n3);
+      n4 = booleanValueExpressionPrime();
         n1.addNode(n4);
-      n5 = booleanValueExpressionPrime();
-        n1.addNode(n5);
         n0.addNode(n1);
       break;
     default:
@@ -368,6 +394,15 @@ class SQLParser implements SQLParserConstants {
       ;
     }
      {if (true) return new booleanValueExpressionPrime(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public or or() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(OR);
+             n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new or(n0);}
     throw new Error("Missing return statement in function");
   }
 
@@ -383,20 +418,18 @@ class SQLParser implements SQLParserConstants {
   final public booleanTermPrime booleanTermPrime() throws ParseException {
    NodeOptional n0 = new NodeOptional();
    NodeSequence n1;
-   NodeToken n2;
-   Token n3;
-   booleanFactor n4;
-   booleanTermPrime n5;
+   and n2;
+   booleanFactor n3;
+   booleanTermPrime n4;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case AND:
         n1 = new NodeSequence(3);
-      n3 = jj_consume_token(AND);
-                 n2 = JTBToolkit.makeNodeToken(n3);
+      n2 = and();
         n1.addNode(n2);
-      n4 = booleanFactor();
+      n3 = booleanFactor();
+        n1.addNode(n3);
+      n4 = booleanTermPrime();
         n1.addNode(n4);
-      n5 = booleanTermPrime();
-        n1.addNode(n5);
         n0.addNode(n1);
       break;
     default:
@@ -407,78 +440,58 @@ class SQLParser implements SQLParserConstants {
     throw new Error("Missing return statement in function");
   }
 
+  final public and and() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(AND);
+              n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new and(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
   final public booleanFactor booleanFactor() throws ParseException {
    NodeOptional n0 = new NodeOptional();
-   NodeToken n1;
-   Token n2;
-   boleanPredicand n3;
-   NodeOptional n4 = new NodeOptional();
-   NodeSequence n5;
-   NodeToken n6;
-   Token n7;
-   boleanPredicand n8;
-   NodeOptional n9 = new NodeOptional();
-   NodeSequence n10;
-   NodeToken n11;
-   Token n12;
-   NodeOptional n13;
-   NodeToken n14;
-   Token n15;
-   NodeToken n16;
-   Token n17;
+   not n1;
+   boleanPredicand n2;
+   NodeOptional n3 = new NodeOptional();
+   NodeSequence n4;
+   NodeToken n5;
+   Token n6;
+   boleanPredicand n7;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case NOT:
-      n2 = jj_consume_token(NOT);
-                 n1 = JTBToolkit.makeNodeToken(n2);
+      n1 = not();
         n0.addNode(n1);
       break;
     default:
       jj_la1[14] = jj_gen;
       ;
     }
-    n3 = boleanPredicand();
+    n2 = boleanPredicand();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case compop:
-        n5 = new NodeSequence(2);
-      n7 = jj_consume_token(compop);
-                    n6 = JTBToolkit.makeNodeToken(n7);
-        n5.addNode(n6);
-      n8 = boleanPredicand();
-        n5.addNode(n8);
+        n4 = new NodeSequence(2);
+      n6 = jj_consume_token(compop);
+                    n5 = JTBToolkit.makeNodeToken(n6);
         n4.addNode(n5);
+      n7 = boleanPredicand();
+        n4.addNode(n7);
+        n3.addNode(n4);
       break;
     default:
       jj_la1[15] = jj_gen;
       ;
     }
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case IS:
-        n13 = new NodeOptional();
-        n10 = new NodeSequence(3);
-      n12 = jj_consume_token(IS);
-                 n11 = JTBToolkit.makeNodeToken(n12);
-        n10.addNode(n11);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case NOT:
-        n15 = jj_consume_token(NOT);
-                     n14 = JTBToolkit.makeNodeToken(n15);
-           n13.addNode(n14);
-        break;
-      default:
-        jj_la1[16] = jj_gen;
-        ;
-      }
-        n10.addNode(n13);
-      n17 = jj_consume_token(truthValue);
-                         n16 = JTBToolkit.makeNodeToken(n17);
-        n10.addNode(n16);
-        n9.addNode(n10);
-      break;
-    default:
-      jj_la1[17] = jj_gen;
-      ;
-    }
-     {if (true) return new booleanFactor(n0,n3,n4,n9);}
+     {if (true) return new booleanFactor(n0,n2,n3);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public not not() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(NOT);
+              n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new not(n0);}
     throw new Error("Missing return statement in function");
   }
 
@@ -511,11 +524,47 @@ class SQLParser implements SQLParserConstants {
         n0 = new NodeChoice(n7, 1);
       break;
     default:
-      jj_la1[18] = jj_gen;
+      jj_la1[16] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
      {if (true) return new boleanPredicand(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public groupby groupby() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(GROUPBY);
+                  n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new groupby(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public orderby orderby() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(ORDERBY);
+                  n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new orderby(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public asc asc() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(ASC);
+              n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new asc(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public desc desc() throws ParseException {
+   NodeToken n0;
+   Token n1;
+    n1 = jj_consume_token(DESC);
+               n0 = JTBToolkit.makeNodeToken(n1);
+     {if (true) return new desc(n0);}
     throw new Error("Missing return statement in function");
   }
 
@@ -528,18 +577,13 @@ class SQLParser implements SQLParserConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[19];
+  final private int[] jj_la1 = new int[17];
   static private int[] jj_la1_0;
-  static private int[] jj_la1_1;
   static {
       jj_la1_init_0();
-      jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x20,0x80,0x100,0x80000000,0x80000000,0x200,0x400,0x115800,0x2000,0x2800,0x114800,0x110800,0x200000,0x400000,0x4000000,0x40000000,0x4000000,0x2000000,0x114800,};
-   }
-   private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x1,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x20,0x80,0x100,0xc0000000,0xc0000000,0x200,0x400,0x115800,0x2000,0x2800,0x114800,0x110800,0x200000,0x400000,0x2000000,0x20000000,0x114800,};
    }
 
   /** Constructor with InputStream. */
@@ -553,7 +597,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -567,7 +611,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -577,7 +621,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -587,7 +631,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -596,7 +640,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -605,7 +649,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -656,24 +700,21 @@ class SQLParser implements SQLParserConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[33];
+    boolean[] la1tokens = new boolean[32];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 19; i++) {
+    for (int i = 0; i < 17; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
             la1tokens[j] = true;
           }
-          if ((jj_la1_1[i] & (1<<j)) != 0) {
-            la1tokens[32+j] = true;
-          }
         }
       }
     }
-    for (int i = 0; i < 33; i++) {
+    for (int i = 0; i < 32; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

@@ -84,13 +84,13 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
    }
 
    /**
-    * f0 -> "SELECT"
+    * f0 -> select()
     * f1 -> selectList()
-    * f2 -> "FROM"
-    * f3 -> <identifier>
-    * f4 -> [ "WHERE" booleanValueExpression() ]
-    * f5 -> [ "GROUP BY" <identifier> ]
-    * f6 -> [ "ORDER BY" commonValueExpression() [ "ASC" | "DESC" ] ]
+    * f2 -> from()
+    * f3 -> identifier()
+    * f4 -> [ where() booleanValueExpression() ]
+    * f5 -> [ groupby() identifier() ]
+    * f6 -> [ orderby() commonValueExpression() [ asc() | desc() ] ]
     * f7 -> ";"
     */
    public R visit(querySpecification n) {
@@ -107,7 +107,16 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
    }
 
    /**
-    * f0 -> "*"
+    * f0 -> <SELECT>
+    */
+   public R visit(select n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> asterisk()
     *       | derivedColumn() ( "," derivedColumn() )*
     */
    public R visit(selectList n) {
@@ -117,8 +126,17 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
    }
 
    /**
+    * f0 -> <asterisk>
+    */
+   public R visit(asterisk n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
     * f0 -> commonValueExpression()
-    * f1 -> [ [ "AS" ] <identifier> ]
+    * f1 -> [ [ as() ] identifier() ]
     */
    public R visit(derivedColumn n) {
       R _ret=null;
@@ -138,11 +156,47 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
    }
 
    /**
-    * f0 -> <identifier>
+    * f0 -> identifier()
     *       | <setfunctiontype> "(" commonValueExpression() ")"
     *       | <number>
     */
    public R visit(nonparenthesizedValueExpressionPrimary n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <AS>
+    */
+   public R visit(as n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <FROM>
+    */
+   public R visit(from n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <identifier>
+    */
+   public R visit(identifier n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <WHERE>
+    */
+   public R visit(where n) {
       R _ret=null;
       n.f0.accept(this);
       return _ret;
@@ -160,9 +214,18 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
    }
 
    /**
-    * f0 -> ( "OR" booleanTerm() booleanValueExpressionPrime() )?
+    * f0 -> ( or() booleanTerm() booleanValueExpressionPrime() )?
     */
    public R visit(booleanValueExpressionPrime n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <OR>
+    */
+   public R visit(or n) {
       R _ret=null;
       n.f0.accept(this);
       return _ret;
@@ -180,7 +243,7 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
    }
 
    /**
-    * f0 -> ( "AND" booleanFactor() booleanTermPrime() )?
+    * f0 -> ( and() booleanFactor() booleanTermPrime() )?
     */
    public R visit(booleanTermPrime n) {
       R _ret=null;
@@ -189,17 +252,33 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
    }
 
    /**
-    * f0 -> [ "NOT" ]
+    * f0 -> <AND>
+    */
+   public R visit(and n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> [ not() ]
     * f1 -> boleanPredicand()
     * f2 -> [ <compop> boleanPredicand() ]
-    * f3 -> [ "IS" [ "NOT" ] <truthValue> ]
     */
    public R visit(booleanFactor n) {
       R _ret=null;
       n.f0.accept(this);
       n.f1.accept(this);
       n.f2.accept(this);
-      n.f3.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <NOT>
+    */
+   public R visit(not n) {
+      R _ret=null;
+      n.f0.accept(this);
       return _ret;
    }
 
@@ -208,6 +287,42 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
     *       | nonparenthesizedValueExpressionPrimary()
     */
    public R visit(boleanPredicand n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <GROUPBY>
+    */
+   public R visit(groupby n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <ORDERBY>
+    */
+   public R visit(orderby n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <ASC>
+    */
+   public R visit(asc n) {
+      R _ret=null;
+      n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <DESC>
+    */
+   public R visit(desc n) {
       R _ret=null;
       n.f0.accept(this);
       return _ret;

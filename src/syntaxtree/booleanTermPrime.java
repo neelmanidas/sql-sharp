@@ -6,7 +6,7 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> ( "AND" booleanFactor() booleanTermPrime() )?
+ * f0 -> ( and() booleanFactor() booleanTermPrime() )?
  */
 public class booleanTermPrime implements Node {
    public NodeOptional f0;

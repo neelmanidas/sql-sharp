@@ -39,26 +39,36 @@ public interface GJNoArguVisitor<R> {
    public R visit(queryList n);
 
    /**
-    * f0 -> "SELECT"
+    * f0 -> select()
     * f1 -> selectList()
-    * f2 -> "FROM"
-    * f3 -> <identifier>
-    * f4 -> [ "WHERE" booleanValueExpression() ]
-    * f5 -> [ "GROUP BY" <identifier> ]
-    * f6 -> [ "ORDER BY" commonValueExpression() [ "ASC" | "DESC" ] ]
+    * f2 -> from()
+    * f3 -> identifier()
+    * f4 -> [ where() booleanValueExpression() ]
+    * f5 -> [ groupby() identifier() ]
+    * f6 -> [ orderby() commonValueExpression() [ asc() | desc() ] ]
     * f7 -> ";"
     */
    public R visit(querySpecification n);
 
    /**
-    * f0 -> "*"
+    * f0 -> <SELECT>
+    */
+   public R visit(select n);
+
+   /**
+    * f0 -> asterisk()
     *       | derivedColumn() ( "," derivedColumn() )*
     */
    public R visit(selectList n);
 
    /**
+    * f0 -> <asterisk>
+    */
+   public R visit(asterisk n);
+
+   /**
     * f0 -> commonValueExpression()
-    * f1 -> [ [ "AS" ] <identifier> ]
+    * f1 -> [ [ as() ] identifier() ]
     */
    public R visit(derivedColumn n);
 
@@ -69,11 +79,31 @@ public interface GJNoArguVisitor<R> {
    public R visit(commonValueExpression n);
 
    /**
-    * f0 -> <identifier>
+    * f0 -> identifier()
     *       | <setfunctiontype> "(" commonValueExpression() ")"
     *       | <number>
     */
    public R visit(nonparenthesizedValueExpressionPrimary n);
+
+   /**
+    * f0 -> <AS>
+    */
+   public R visit(as n);
+
+   /**
+    * f0 -> <FROM>
+    */
+   public R visit(from n);
+
+   /**
+    * f0 -> <identifier>
+    */
+   public R visit(identifier n);
+
+   /**
+    * f0 -> <WHERE>
+    */
+   public R visit(where n);
 
    /**
     * f0 -> booleanTerm()
@@ -82,9 +112,14 @@ public interface GJNoArguVisitor<R> {
    public R visit(booleanValueExpression n);
 
    /**
-    * f0 -> ( "OR" booleanTerm() booleanValueExpressionPrime() )?
+    * f0 -> ( or() booleanTerm() booleanValueExpressionPrime() )?
     */
    public R visit(booleanValueExpressionPrime n);
+
+   /**
+    * f0 -> <OR>
+    */
+   public R visit(or n);
 
    /**
     * f0 -> booleanFactor()
@@ -93,23 +128,52 @@ public interface GJNoArguVisitor<R> {
    public R visit(booleanTerm n);
 
    /**
-    * f0 -> ( "AND" booleanFactor() booleanTermPrime() )?
+    * f0 -> ( and() booleanFactor() booleanTermPrime() )?
     */
    public R visit(booleanTermPrime n);
 
    /**
-    * f0 -> [ "NOT" ]
+    * f0 -> <AND>
+    */
+   public R visit(and n);
+
+   /**
+    * f0 -> [ not() ]
     * f1 -> boleanPredicand()
     * f2 -> [ <compop> boleanPredicand() ]
-    * f3 -> [ "IS" [ "NOT" ] <truthValue> ]
     */
    public R visit(booleanFactor n);
+
+   /**
+    * f0 -> <NOT>
+    */
+   public R visit(not n);
 
    /**
     * f0 -> "(" booleanValueExpression() ")"
     *       | nonparenthesizedValueExpressionPrimary()
     */
    public R visit(boleanPredicand n);
+
+   /**
+    * f0 -> <GROUPBY>
+    */
+   public R visit(groupby n);
+
+   /**
+    * f0 -> <ORDERBY>
+    */
+   public R visit(orderby n);
+
+   /**
+    * f0 -> <ASC>
+    */
+   public R visit(asc n);
+
+   /**
+    * f0 -> <DESC>
+    */
+   public R visit(desc n);
 
 }
 
