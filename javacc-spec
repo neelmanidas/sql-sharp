@@ -34,7 +34,7 @@ TOKEN : {
     |	< #equalsoperator: "=" >
     |	< #lessthanoperator: "<" >
     |	< #greaterthanoperator: ">" >
-    |	<compop: <equalsoperator> | <lessthanoperator> <greaterthanoperator> | <lessthanoperator> | <greaterthanoperator> | <lessthanoperator> <equalsoperator> | <greaterthanoperator> <equalsoperator>>
+    |	<compop: <equalsoperator> | <lessthanoperator> <greaterthanoperator> | <lessthanoperator> | <greaterthanoperator> | <lessthanoperator> <equalsoperator> | <greaterthanoperator> <equalsoperator> >
 }
 
 void Prog() :
