@@ -42,7 +42,7 @@ void querySpecification() :
 
 void selectList() :
 {}
-{ "*"
+{ "\*"
   | derivedColumn() ([ "," derivedColumn() ])* }
 
 void derivedColumn() :
