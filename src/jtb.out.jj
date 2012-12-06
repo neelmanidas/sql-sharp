@@ -40,7 +40,6 @@ TOKEN :
    | <comma: ",">
    | <identifier: ["a"-"z"] (["a"-"z"] | ["0"-"9"])*>
    | <asterisk: "*">
-   | <AS: "AS">
    | <leftparen: "(">
    | <rightparen: ")">
    | <setfunctiontype: "AVG" | "MAX" | "MIN" | "SUM" | "COUNT">
@@ -141,12 +140,12 @@ select select() :
    NodeToken n3;
    Token n4;
    NodeSequence n5;
-   derivedColumn n6;
+   commonValueExpression n6;
    NodeListOptional n7 = new NodeListOptional();
    NodeSequence n8;
    NodeToken n9;
    Token n10;
-   derivedColumn n11;
+   commonValueExpression n11;
 
    
 }
@@ -158,13 +157,13 @@ select select() :
          { n2 = new NodeChoice(n3, 0); }
       |
          { n5 = new NodeSequence(2); }
-         n6=derivedColumn()
+         n6=commonValueExpression()
          { n5.addNode(n6); }
          (
             { n8 = new NodeSequence(2); }
             n10="," { n9 = JTBToolkit.makeNodeToken(n10); }
             { n8.addNode(n9); }
-            n11=derivedColumn()
+            n11=commonValueExpression()
             { n8.addNode(n11); }
             { n7.addNode(n8); }
          )*
@@ -252,31 +251,6 @@ orderby orderby() :
    )?
    
    { return new orderby(n0,n2,n3); }
-}
-
-derivedColumn derivedColumn() :
-{
-   commonValueExpression n0;
-   NodeOptional n1 = new NodeOptional();
-   NodeSequence n2;
-   NodeToken n3;
-   Token n4;
-   identifier n5;
-
-   
-}
-{
-   n0=commonValueExpression()
-   (
-      { n2 = new NodeSequence(2); }
-      n4=<AS> { n3 = JTBToolkit.makeNodeToken(n4); }
-      { n2.addNode(n3); }
-      n5=identifier()
-      { n2.addNode(n5); }
-      { n1.addNode(n2); }
-   )?
-   
-   { return new derivedColumn(n0,n1); }
 }
 
 commonValueExpression commonValueExpression() :

@@ -88,7 +88,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
 
    /**
     * f0 -> <SELECT>
-    * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
+    * f1 -> ( "*" | commonValueExpression() ( "," commonValueExpression() )* )
     */
    public void visit(select n, A argu) {
       n.f0.accept(this, argu);
@@ -131,15 +131,6 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
-   }
-
-   /**
-    * f0 -> commonValueExpression()
-    * f1 -> [ <AS> identifier() ]
-    */
-   public void visit(derivedColumn n, A argu) {
-      n.f0.accept(this, argu);
-      n.f1.accept(this, argu);
    }
 
    /**

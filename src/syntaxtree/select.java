@@ -7,7 +7,7 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> <SELECT>
- * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
+ * f1 -> ( "*" | commonValueExpression() ( "," commonValueExpression() )* )
  */
 public class select implements Node {
    public NodeToken f0;

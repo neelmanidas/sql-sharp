@@ -1,7 +1,9 @@
+package intermediate;
+
 
 import syntaxtree.groupby;
 
-class IntermediateGroupBy extends IntermediateNode {
+public class IntermediateGroupBy extends IntermediateNode {
 
     public IntermediateGroupBy(groupby n, String tokenImage) {
         super(n,tokenImage);

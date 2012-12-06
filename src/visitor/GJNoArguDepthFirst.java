@@ -104,7 +104,7 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
 
    /**
     * f0 -> <SELECT>
-    * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
+    * f1 -> ( "*" | commonValueExpression() ( "," commonValueExpression() )* )
     */
    public R visit(select n) {
       R _ret=null;
@@ -156,17 +156,6 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
       n.f0.accept(this);
       n.f1.accept(this);
       n.f2.accept(this);
-      return _ret;
-   }
-
-   /**
-    * f0 -> commonValueExpression()
-    * f1 -> [ <AS> identifier() ]
-    */
-   public R visit(derivedColumn n) {
-      R _ret=null;
-      n.f0.accept(this);
-      n.f1.accept(this);
       return _ret;
    }
 

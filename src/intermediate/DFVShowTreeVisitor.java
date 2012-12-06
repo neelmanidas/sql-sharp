@@ -1,3 +1,5 @@
+package intermediate;
+
 import syntaxtree.NodeToken;
 import syntaxtree.Prog;
 import syntaxtree.boleanPredicand;
@@ -20,7 +22,7 @@ import syntaxtree.where;
 import visitor.DepthFirstVisitor;
 
 
-class DFVShowTreeVisitor extends DepthFirstVisitor {
+public class DFVShowTreeVisitor extends DepthFirstVisitor {
 
     int depht = 0;
 

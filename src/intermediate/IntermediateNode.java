@@ -1,3 +1,5 @@
+package intermediate;
+
 
 import syntaxtree.Node;
 

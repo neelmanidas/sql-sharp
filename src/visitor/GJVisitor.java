@@ -50,7 +50,7 @@ public interface GJVisitor<R,A> {
 
    /**
     * f0 -> <SELECT>
-    * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
+    * f1 -> ( "*" | commonValueExpression() ( "," commonValueExpression() )* )
     */
    public R visit(select n, A argu);
 
@@ -78,12 +78,6 @@ public interface GJVisitor<R,A> {
     * f2 -> [ <ASC> | <DESC> ]
     */
    public R visit(orderby n, A argu);
-
-   /**
-    * f0 -> commonValueExpression()
-    * f1 -> [ <AS> identifier() ]
-    */
-   public R visit(derivedColumn n, A argu);
 
    /**
     * f0 -> "(" commonValueExpression() ")"

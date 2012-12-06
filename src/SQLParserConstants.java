@@ -25,43 +25,41 @@ public interface SQLParserConstants {
   /** RegularExpression Id. */
   int asterisk = 12;
   /** RegularExpression Id. */
-  int AS = 13;
+  int leftparen = 13;
   /** RegularExpression Id. */
-  int leftparen = 14;
+  int rightparen = 14;
   /** RegularExpression Id. */
-  int rightparen = 15;
+  int setfunctiontype = 15;
   /** RegularExpression Id. */
-  int setfunctiontype = 16;
+  int digit = 16;
   /** RegularExpression Id. */
-  int digit = 17;
+  int integer = 17;
   /** RegularExpression Id. */
-  int integer = 18;
+  int real = 18;
   /** RegularExpression Id. */
-  int real = 19;
+  int number = 19;
   /** RegularExpression Id. */
-  int number = 20;
+  int OR = 20;
   /** RegularExpression Id. */
-  int OR = 21;
+  int AND = 21;
   /** RegularExpression Id. */
-  int AND = 22;
+  int semicolon = 22;
   /** RegularExpression Id. */
-  int semicolon = 23;
+  int IS = 23;
   /** RegularExpression Id. */
-  int IS = 24;
+  int NOT = 24;
   /** RegularExpression Id. */
-  int NOT = 25;
+  int equalsoperator = 25;
   /** RegularExpression Id. */
-  int equalsoperator = 26;
+  int lessthanoperator = 26;
   /** RegularExpression Id. */
-  int lessthanoperator = 27;
+  int greaterthanoperator = 27;
   /** RegularExpression Id. */
-  int greaterthanoperator = 28;
+  int compop = 28;
   /** RegularExpression Id. */
-  int compop = 29;
+  int ASC = 29;
   /** RegularExpression Id. */
-  int ASC = 30;
-  /** RegularExpression Id. */
-  int DESC = 31;
+  int DESC = 30;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -81,7 +79,6 @@ public interface SQLParserConstants {
     "\",\"",
     "<identifier>",
     "\"*\"",
-    "\"AS\"",
     "\"(\"",
     "\")\"",
     "<setfunctiontype>",

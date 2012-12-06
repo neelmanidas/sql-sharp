@@ -50,7 +50,7 @@ public interface Visitor {
 
    /**
     * f0 -> <SELECT>
-    * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
+    * f1 -> ( "*" | commonValueExpression() ( "," commonValueExpression() )* )
     */
    public void visit(select n);
 
@@ -78,12 +78,6 @@ public interface Visitor {
     * f2 -> [ <ASC> | <DESC> ]
     */
    public void visit(orderby n);
-
-   /**
-    * f0 -> commonValueExpression()
-    * f1 -> [ <AS> identifier() ]
-    */
-   public void visit(derivedColumn n);
 
    /**
     * f0 -> "(" commonValueExpression() ")"

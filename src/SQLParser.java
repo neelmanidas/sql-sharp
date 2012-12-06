@@ -93,12 +93,12 @@ class SQLParser implements SQLParserConstants {
    NodeToken n3;
    Token n4;
    NodeSequence n5;
-   derivedColumn n6;
+   commonValueExpression n6;
    NodeListOptional n7 = new NodeListOptional();
    NodeSequence n8;
    NodeToken n9;
    Token n10;
-   derivedColumn n11;
+   commonValueExpression n11;
     n1 = jj_consume_token(SELECT);
                  n0 = JTBToolkit.makeNodeToken(n1);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -112,7 +112,7 @@ class SQLParser implements SQLParserConstants {
     case setfunctiontype:
     case number:
            n5 = new NodeSequence(2);
-      n6 = derivedColumn();
+      n6 = commonValueExpression();
            n5.addNode(n6);
       label_2:
       while (true) {
@@ -128,7 +128,7 @@ class SQLParser implements SQLParserConstants {
         n10 = jj_consume_token(comma);
                       n9 = JTBToolkit.makeNodeToken(n10);
               n8.addNode(n9);
-        n11 = derivedColumn();
+        n11 = commonValueExpression();
               n8.addNode(n11);
               n7.addNode(n8);
       }
@@ -220,32 +220,6 @@ class SQLParser implements SQLParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  static final public derivedColumn derivedColumn() throws ParseException {
-   commonValueExpression n0;
-   NodeOptional n1 = new NodeOptional();
-   NodeSequence n2;
-   NodeToken n3;
-   Token n4;
-   identifier n5;
-    n0 = commonValueExpression();
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case AS:
-        n2 = new NodeSequence(2);
-      n4 = jj_consume_token(AS);
-                n3 = JTBToolkit.makeNodeToken(n4);
-        n2.addNode(n3);
-      n5 = identifier();
-        n2.addNode(n5);
-        n1.addNode(n2);
-      break;
-    default:
-      jj_la1[8] = jj_gen;
-      ;
-    }
-     {if (true) return new derivedColumn(n0,n1);}
-    throw new Error("Missing return statement in function");
-  }
-
   static final public commonValueExpression commonValueExpression() throws ParseException {
    NodeChoice n0;
    NodeSequence n1;
@@ -275,7 +249,7 @@ class SQLParser implements SQLParserConstants {
         n0 = new NodeChoice(n7, 1);
       break;
     default:
-      jj_la1[9] = jj_gen;
+      jj_la1[8] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -322,7 +296,7 @@ class SQLParser implements SQLParserConstants {
         n0 = new NodeChoice(n10, 2);
       break;
     default:
-      jj_la1[10] = jj_gen;
+      jj_la1[9] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -368,7 +342,7 @@ class SQLParser implements SQLParserConstants {
         n0.addNode(n1);
       break;
     default:
-      jj_la1[11] = jj_gen;
+      jj_la1[10] = jj_gen;
       ;
     }
      {if (true) return new booleanValueExpressionPrime(n0);}
@@ -404,7 +378,7 @@ class SQLParser implements SQLParserConstants {
         n0.addNode(n1);
       break;
     default:
-      jj_la1[12] = jj_gen;
+      jj_la1[11] = jj_gen;
       ;
     }
      {if (true) return new booleanTermPrime(n0);}
@@ -428,7 +402,7 @@ class SQLParser implements SQLParserConstants {
         n0.addNode(n1);
       break;
     default:
-      jj_la1[13] = jj_gen;
+      jj_la1[12] = jj_gen;
       ;
     }
     n3 = boleanPredicand();
@@ -443,7 +417,7 @@ class SQLParser implements SQLParserConstants {
         n4.addNode(n5);
       break;
     default:
-      jj_la1[14] = jj_gen;
+      jj_la1[13] = jj_gen;
       ;
     }
      {if (true) return new booleanFactor(n0,n3,n4);}
@@ -479,7 +453,7 @@ class SQLParser implements SQLParserConstants {
         n0 = new NodeChoice(n7, 1);
       break;
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[14] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -497,13 +471,13 @@ class SQLParser implements SQLParserConstants {
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[16];
+  static final private int[] jj_la1 = new int[15];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x20,0x80,0x100,0x200,0x400,0x115800,0xc0000000,0xc0000000,0x2000,0x114800,0x110800,0x200000,0x400000,0x2000000,0x20000000,0x114800,};
+      jj_la1_0 = new int[] {0x20,0x80,0x100,0x200,0x400,0x8b800,0x60000000,0x60000000,0x8a800,0x88800,0x100000,0x200000,0x1000000,0x10000000,0x8a800,};
    }
 
   /** Constructor with InputStream. */
@@ -524,7 +498,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -538,7 +512,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -555,7 +529,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -565,7 +539,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -581,7 +555,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -590,7 +564,7 @@ class SQLParser implements SQLParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -641,12 +615,12 @@ class SQLParser implements SQLParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[32];
+    boolean[] la1tokens = new boolean[31];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 15; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -655,7 +629,7 @@ class SQLParser implements SQLParserConstants {
         }
       }
     }
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 31; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

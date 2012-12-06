@@ -78,7 +78,7 @@ public class DepthFirstVisitor implements Visitor {
 
    /**
     * f0 -> <SELECT>
-    * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
+    * f1 -> ( "*" | commonValueExpression() ( "," commonValueExpression() )* )
     */
    public void visit(select n) {
       n.f0.accept(this);
@@ -121,15 +121,6 @@ public class DepthFirstVisitor implements Visitor {
       n.f0.accept(this);
       n.f1.accept(this);
       n.f2.accept(this);
-   }
-
-   /**
-    * f0 -> commonValueExpression()
-    * f1 -> [ <AS> identifier() ]
-    */
-   public void visit(derivedColumn n) {
-      n.f0.accept(this);
-      n.f1.accept(this);
    }
 
    /**

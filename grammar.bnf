@@ -2,11 +2,9 @@
 
 <query specification> ::= SELECT <select list> FROM <identifier> [ WHERE <boolean value expression> ] [ GROUP BY <identifier> ] [ ORDER BY <identifier> [ ASC | DESC ] ] <semicolon>
 
-<select list> ::= <asterisk> | <derived column> [ { <comma> <derived column> }... ]
+<select list> ::= <asterisk> | <common value expression> [ { <comma> <common value expression> }... ]
 
 <asterisk> ::= *
-
-<derived column> ::= <common value expression> [ [ AS ] <identifier> ]
 
 <common value expression> ::= <left paren> <common value expression> <right paren> | <nonparenthesized value expression primary> | <number>
 

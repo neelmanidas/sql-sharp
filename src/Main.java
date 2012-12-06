@@ -1,3 +1,6 @@
+import intermediate.DFVShowTreeVisitor;
+import intermediate.IntermediateNode;
+import intermediate.DFVSequencer;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Iterator;

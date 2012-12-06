@@ -18,7 +18,6 @@ TOKEN : {
     |	< comma: ",">
     |	< identifier: ["a"-"z"](["a"-"z"] | ["0"-"9"])* >
     |	< asterisk: "*">
-    |	< AS: "AS">
     |	< leftparen: "(">
     |	< rightparen: ")">
     |   < setfunctiontype: "AVG" | "MAX" | "MIN" | "SUM" | "COUNT">
@@ -53,7 +52,7 @@ void querySpecification() :
 
 void select() :
 {}
-{ <SELECT> ( "*" | derivedColumn() ( "," derivedColumn() )* ) }
+{ <SELECT> ( "*" | commonValueExpression() ( "," commonValueExpression() )* ) }
 
 void from() :
 {}
@@ -70,10 +69,6 @@ void groupby() :
 void orderby() :
 {}
 { <ORDERBY> identifier() [ <ASC> | <DESC> ] }
-
-void derivedColumn() :
-{}
-{ commonValueExpression() [ <AS>  identifier() ] }
 
 void commonValueExpression() :
 {}

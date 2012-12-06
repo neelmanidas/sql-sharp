@@ -50,7 +50,7 @@ public interface GJNoArguVisitor<R> {
 
    /**
     * f0 -> <SELECT>
-    * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
+    * f1 -> ( "*" | commonValueExpression() ( "," commonValueExpression() )* )
     */
    public R visit(select n);
 
@@ -78,12 +78,6 @@ public interface GJNoArguVisitor<R> {
     * f2 -> [ <ASC> | <DESC> ]
     */
    public R visit(orderby n);
-
-   /**
-    * f0 -> commonValueExpression()
-    * f1 -> [ <AS> identifier() ]
-    */
-   public R visit(derivedColumn n);
 
    /**
     * f0 -> "(" commonValueExpression() ")"

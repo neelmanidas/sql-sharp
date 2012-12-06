@@ -1,3 +1,5 @@
+package intermediate;
+
 import java.util.LinkedList;
 import syntaxtree.Node;
 import syntaxtree.from;
