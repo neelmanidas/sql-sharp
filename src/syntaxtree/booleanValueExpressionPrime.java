@@ -6,7 +6,7 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> ( or() booleanTerm() booleanValueExpressionPrime() )?
+ * f0 -> ( <OR> booleanTerm() booleanValueExpressionPrime() )?
  */
 public class booleanValueExpressionPrime implements Node {
    public NodeOptional f0;

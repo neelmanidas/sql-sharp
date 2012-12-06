@@ -6,7 +6,7 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> [ not() ]
+ * f0 -> [ <NOT> ]
  * f1 -> boleanPredicand()
  * f2 -> [ <compop> boleanPredicand() ]
  */

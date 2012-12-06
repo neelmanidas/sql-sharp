@@ -7,16 +7,20 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> <SELECT>
+ * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
  */
 public class select implements Node {
    public NodeToken f0;
+   public NodeChoice f1;
 
-   public select(NodeToken n0) {
+   public select(NodeToken n0, NodeChoice n1) {
       f0 = n0;
+      f1 = n1;
    }
 
-   public select() {
+   public select(NodeChoice n0) {
       f0 = new NodeToken("SELECT");
+      f1 = n0;
    }
 
    public void accept(visitor.Visitor v) {

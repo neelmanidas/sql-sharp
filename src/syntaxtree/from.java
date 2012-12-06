@@ -7,16 +7,20 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> <FROM>
+ * f1 -> identifier()
  */
 public class from implements Node {
    public NodeToken f0;
+   public identifier f1;
 
-   public from(NodeToken n0) {
+   public from(NodeToken n0, identifier n1) {
       f0 = n0;
+      f1 = n1;
    }
 
-   public from() {
+   public from(identifier n0) {
       f0 = new NodeToken("FROM");
+      f1 = n0;
    }
 
    public void accept(visitor.Visitor v) {

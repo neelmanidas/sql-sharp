@@ -40,35 +40,48 @@ public interface GJVisitor<R,A> {
 
    /**
     * f0 -> select()
-    * f1 -> selectList()
-    * f2 -> from()
-    * f3 -> identifier()
-    * f4 -> [ where() booleanValueExpression() ]
-    * f5 -> [ groupby() identifier() ]
-    * f6 -> [ orderby() commonValueExpression() [ asc() | desc() ] ]
-    * f7 -> ";"
+    * f1 -> from()
+    * f2 -> [ where() ]
+    * f3 -> [ groupby() ]
+    * f4 -> [ orderby() ]
+    * f5 -> ";"
     */
    public R visit(querySpecification n, A argu);
 
    /**
     * f0 -> <SELECT>
+    * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
     */
    public R visit(select n, A argu);
 
    /**
-    * f0 -> asterisk()
-    *       | derivedColumn() ( "," derivedColumn() )*
+    * f0 -> <FROM>
+    * f1 -> identifier()
     */
-   public R visit(selectList n, A argu);
+   public R visit(from n, A argu);
 
    /**
-    * f0 -> <asterisk>
+    * f0 -> <WHERE>
+    * f1 -> booleanValueExpression()
     */
-   public R visit(asterisk n, A argu);
+   public R visit(where n, A argu);
+
+   /**
+    * f0 -> <GROUPBY>
+    * f1 -> identifier()
+    */
+   public R visit(groupby n, A argu);
+
+   /**
+    * f0 -> <ORDERBY>
+    * f1 -> identifier()
+    * f2 -> [ <ASC> | <DESC> ]
+    */
+   public R visit(orderby n, A argu);
 
    /**
     * f0 -> commonValueExpression()
-    * f1 -> [ [ as() ] identifier() ]
+    * f1 -> [ <AS> identifier() ]
     */
    public R visit(derivedColumn n, A argu);
 
@@ -86,24 +99,9 @@ public interface GJVisitor<R,A> {
    public R visit(nonparenthesizedValueExpressionPrimary n, A argu);
 
    /**
-    * f0 -> <AS>
-    */
-   public R visit(as n, A argu);
-
-   /**
-    * f0 -> <FROM>
-    */
-   public R visit(from n, A argu);
-
-   /**
     * f0 -> <identifier>
     */
    public R visit(identifier n, A argu);
-
-   /**
-    * f0 -> <WHERE>
-    */
-   public R visit(where n, A argu);
 
    /**
     * f0 -> booleanTerm()
@@ -112,14 +110,9 @@ public interface GJVisitor<R,A> {
    public R visit(booleanValueExpression n, A argu);
 
    /**
-    * f0 -> ( or() booleanTerm() booleanValueExpressionPrime() )?
+    * f0 -> ( <OR> booleanTerm() booleanValueExpressionPrime() )?
     */
    public R visit(booleanValueExpressionPrime n, A argu);
-
-   /**
-    * f0 -> <OR>
-    */
-   public R visit(or n, A argu);
 
    /**
     * f0 -> booleanFactor()
@@ -128,51 +121,21 @@ public interface GJVisitor<R,A> {
    public R visit(booleanTerm n, A argu);
 
    /**
-    * f0 -> ( and() booleanFactor() booleanTermPrime() )?
+    * f0 -> ( <AND> booleanFactor() booleanTermPrime() )?
     */
    public R visit(booleanTermPrime n, A argu);
 
    /**
-    * f0 -> <AND>
-    */
-   public R visit(and n, A argu);
-
-   /**
-    * f0 -> [ not() ]
+    * f0 -> [ <NOT> ]
     * f1 -> boleanPredicand()
     * f2 -> [ <compop> boleanPredicand() ]
     */
    public R visit(booleanFactor n, A argu);
 
    /**
-    * f0 -> <NOT>
-    */
-   public R visit(not n, A argu);
-
-   /**
     * f0 -> "(" booleanValueExpression() ")"
     *       | nonparenthesizedValueExpressionPrimary()
     */
    public R visit(boleanPredicand n, A argu);
-
-   /**
-    * f0 -> <GROUPBY>
-    */
-   public R visit(groupby n, A argu);
-
-   /**
-    * f0 -> <ORDERBY>
-    */
-   public R visit(orderby n, A argu);
-
-   /**
-    * f0 -> <ASC>
-    */
-   public R visit(asc n, A argu);
-
-   /**
-    * f0 -> <DESC>
-    */
-   public R visit(desc n, A argu);
 
 }

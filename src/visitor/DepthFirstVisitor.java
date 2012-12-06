@@ -61,13 +61,11 @@ public class DepthFirstVisitor implements Visitor {
 
    /**
     * f0 -> select()
-    * f1 -> selectList()
-    * f2 -> from()
-    * f3 -> identifier()
-    * f4 -> [ where() booleanValueExpression() ]
-    * f5 -> [ groupby() identifier() ]
-    * f6 -> [ orderby() commonValueExpression() [ asc() | desc() ] ]
-    * f7 -> ";"
+    * f1 -> from()
+    * f2 -> [ where() ]
+    * f3 -> [ groupby() ]
+    * f4 -> [ orderby() ]
+    * f5 -> ";"
     */
    public void visit(querySpecification n) {
       n.f0.accept(this);
@@ -76,35 +74,58 @@ public class DepthFirstVisitor implements Visitor {
       n.f3.accept(this);
       n.f4.accept(this);
       n.f5.accept(this);
-      n.f6.accept(this);
-      n.f7.accept(this);
    }
 
    /**
     * f0 -> <SELECT>
+    * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
     */
    public void visit(select n) {
       n.f0.accept(this);
+      n.f1.accept(this);
    }
 
    /**
-    * f0 -> asterisk()
-    *       | derivedColumn() ( "," derivedColumn() )*
+    * f0 -> <FROM>
+    * f1 -> identifier()
     */
-   public void visit(selectList n) {
+   public void visit(from n) {
       n.f0.accept(this);
+      n.f1.accept(this);
    }
 
    /**
-    * f0 -> <asterisk>
+    * f0 -> <WHERE>
+    * f1 -> booleanValueExpression()
     */
-   public void visit(asterisk n) {
+   public void visit(where n) {
       n.f0.accept(this);
+      n.f1.accept(this);
+   }
+
+   /**
+    * f0 -> <GROUPBY>
+    * f1 -> identifier()
+    */
+   public void visit(groupby n) {
+      n.f0.accept(this);
+      n.f1.accept(this);
+   }
+
+   /**
+    * f0 -> <ORDERBY>
+    * f1 -> identifier()
+    * f2 -> [ <ASC> | <DESC> ]
+    */
+   public void visit(orderby n) {
+      n.f0.accept(this);
+      n.f1.accept(this);
+      n.f2.accept(this);
    }
 
    /**
     * f0 -> commonValueExpression()
-    * f1 -> [ [ as() ] identifier() ]
+    * f1 -> [ <AS> identifier() ]
     */
    public void visit(derivedColumn n) {
       n.f0.accept(this);
@@ -129,30 +150,9 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> <AS>
-    */
-   public void visit(as n) {
-      n.f0.accept(this);
-   }
-
-   /**
-    * f0 -> <FROM>
-    */
-   public void visit(from n) {
-      n.f0.accept(this);
-   }
-
-   /**
     * f0 -> <identifier>
     */
    public void visit(identifier n) {
-      n.f0.accept(this);
-   }
-
-   /**
-    * f0 -> <WHERE>
-    */
-   public void visit(where n) {
       n.f0.accept(this);
    }
 
@@ -166,16 +166,9 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> ( or() booleanTerm() booleanValueExpressionPrime() )?
+    * f0 -> ( <OR> booleanTerm() booleanValueExpressionPrime() )?
     */
    public void visit(booleanValueExpressionPrime n) {
-      n.f0.accept(this);
-   }
-
-   /**
-    * f0 -> <OR>
-    */
-   public void visit(or n) {
       n.f0.accept(this);
    }
 
@@ -189,21 +182,14 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> ( and() booleanFactor() booleanTermPrime() )?
+    * f0 -> ( <AND> booleanFactor() booleanTermPrime() )?
     */
    public void visit(booleanTermPrime n) {
       n.f0.accept(this);
    }
 
    /**
-    * f0 -> <AND>
-    */
-   public void visit(and n) {
-      n.f0.accept(this);
-   }
-
-   /**
-    * f0 -> [ not() ]
+    * f0 -> [ <NOT> ]
     * f1 -> boleanPredicand()
     * f2 -> [ <compop> boleanPredicand() ]
     */
@@ -214,45 +200,10 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> <NOT>
-    */
-   public void visit(not n) {
-      n.f0.accept(this);
-   }
-
-   /**
     * f0 -> "(" booleanValueExpression() ")"
     *       | nonparenthesizedValueExpressionPrimary()
     */
    public void visit(boleanPredicand n) {
-      n.f0.accept(this);
-   }
-
-   /**
-    * f0 -> <GROUPBY>
-    */
-   public void visit(groupby n) {
-      n.f0.accept(this);
-   }
-
-   /**
-    * f0 -> <ORDERBY>
-    */
-   public void visit(orderby n) {
-      n.f0.accept(this);
-   }
-
-   /**
-    * f0 -> <ASC>
-    */
-   public void visit(asc n) {
-      n.f0.accept(this);
-   }
-
-   /**
-    * f0 -> <DESC>
-    */
-   public void visit(desc n) {
       n.f0.accept(this);
    }
 

@@ -7,16 +7,20 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> <GROUPBY>
+ * f1 -> identifier()
  */
 public class groupby implements Node {
    public NodeToken f0;
+   public identifier f1;
 
-   public groupby(NodeToken n0) {
+   public groupby(NodeToken n0, identifier n1) {
       f0 = n0;
+      f1 = n1;
    }
 
-   public groupby() {
+   public groupby(identifier n0) {
       f0 = new NodeToken("GROUP BY");
+      f1 = n0;
    }
 
    public void accept(visitor.Visitor v) {

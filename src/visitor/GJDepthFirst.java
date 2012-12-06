@@ -85,13 +85,11 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
 
    /**
     * f0 -> select()
-    * f1 -> selectList()
-    * f2 -> from()
-    * f3 -> identifier()
-    * f4 -> [ where() booleanValueExpression() ]
-    * f5 -> [ groupby() identifier() ]
-    * f6 -> [ orderby() commonValueExpression() [ asc() | desc() ] ]
-    * f7 -> ";"
+    * f1 -> from()
+    * f2 -> [ where() ]
+    * f3 -> [ groupby() ]
+    * f4 -> [ orderby() ]
+    * f5 -> ";"
     */
    public R visit(querySpecification n, A argu) {
       R _ret=null;
@@ -101,42 +99,69 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
       n.f3.accept(this, argu);
       n.f4.accept(this, argu);
       n.f5.accept(this, argu);
-      n.f6.accept(this, argu);
-      n.f7.accept(this, argu);
       return _ret;
    }
 
    /**
     * f0 -> <SELECT>
+    * f1 -> ( "*" | derivedColumn() ( "," derivedColumn() )* )
     */
    public R visit(select n, A argu) {
       R _ret=null;
       n.f0.accept(this, argu);
+      n.f1.accept(this, argu);
       return _ret;
    }
 
    /**
-    * f0 -> asterisk()
-    *       | derivedColumn() ( "," derivedColumn() )*
+    * f0 -> <FROM>
+    * f1 -> identifier()
     */
-   public R visit(selectList n, A argu) {
+   public R visit(from n, A argu) {
       R _ret=null;
       n.f0.accept(this, argu);
+      n.f1.accept(this, argu);
       return _ret;
    }
 
    /**
-    * f0 -> <asterisk>
+    * f0 -> <WHERE>
+    * f1 -> booleanValueExpression()
     */
-   public R visit(asterisk n, A argu) {
+   public R visit(where n, A argu) {
       R _ret=null;
       n.f0.accept(this, argu);
+      n.f1.accept(this, argu);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <GROUPBY>
+    * f1 -> identifier()
+    */
+   public R visit(groupby n, A argu) {
+      R _ret=null;
+      n.f0.accept(this, argu);
+      n.f1.accept(this, argu);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <ORDERBY>
+    * f1 -> identifier()
+    * f2 -> [ <ASC> | <DESC> ]
+    */
+   public R visit(orderby n, A argu) {
+      R _ret=null;
+      n.f0.accept(this, argu);
+      n.f1.accept(this, argu);
+      n.f2.accept(this, argu);
       return _ret;
    }
 
    /**
     * f0 -> commonValueExpression()
-    * f1 -> [ [ as() ] identifier() ]
+    * f1 -> [ <AS> identifier() ]
     */
    public R visit(derivedColumn n, A argu) {
       R _ret=null;
@@ -167,36 +192,9 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
    }
 
    /**
-    * f0 -> <AS>
-    */
-   public R visit(as n, A argu) {
-      R _ret=null;
-      n.f0.accept(this, argu);
-      return _ret;
-   }
-
-   /**
-    * f0 -> <FROM>
-    */
-   public R visit(from n, A argu) {
-      R _ret=null;
-      n.f0.accept(this, argu);
-      return _ret;
-   }
-
-   /**
     * f0 -> <identifier>
     */
    public R visit(identifier n, A argu) {
-      R _ret=null;
-      n.f0.accept(this, argu);
-      return _ret;
-   }
-
-   /**
-    * f0 -> <WHERE>
-    */
-   public R visit(where n, A argu) {
       R _ret=null;
       n.f0.accept(this, argu);
       return _ret;
@@ -214,18 +212,9 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
    }
 
    /**
-    * f0 -> ( or() booleanTerm() booleanValueExpressionPrime() )?
+    * f0 -> ( <OR> booleanTerm() booleanValueExpressionPrime() )?
     */
    public R visit(booleanValueExpressionPrime n, A argu) {
-      R _ret=null;
-      n.f0.accept(this, argu);
-      return _ret;
-   }
-
-   /**
-    * f0 -> <OR>
-    */
-   public R visit(or n, A argu) {
       R _ret=null;
       n.f0.accept(this, argu);
       return _ret;
@@ -243,7 +232,7 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
    }
 
    /**
-    * f0 -> ( and() booleanFactor() booleanTermPrime() )?
+    * f0 -> ( <AND> booleanFactor() booleanTermPrime() )?
     */
    public R visit(booleanTermPrime n, A argu) {
       R _ret=null;
@@ -252,16 +241,7 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
    }
 
    /**
-    * f0 -> <AND>
-    */
-   public R visit(and n, A argu) {
-      R _ret=null;
-      n.f0.accept(this, argu);
-      return _ret;
-   }
-
-   /**
-    * f0 -> [ not() ]
+    * f0 -> [ <NOT> ]
     * f1 -> boleanPredicand()
     * f2 -> [ <compop> boleanPredicand() ]
     */
@@ -274,55 +254,10 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
    }
 
    /**
-    * f0 -> <NOT>
-    */
-   public R visit(not n, A argu) {
-      R _ret=null;
-      n.f0.accept(this, argu);
-      return _ret;
-   }
-
-   /**
     * f0 -> "(" booleanValueExpression() ")"
     *       | nonparenthesizedValueExpressionPrimary()
     */
    public R visit(boleanPredicand n, A argu) {
-      R _ret=null;
-      n.f0.accept(this, argu);
-      return _ret;
-   }
-
-   /**
-    * f0 -> <GROUPBY>
-    */
-   public R visit(groupby n, A argu) {
-      R _ret=null;
-      n.f0.accept(this, argu);
-      return _ret;
-   }
-
-   /**
-    * f0 -> <ORDERBY>
-    */
-   public R visit(orderby n, A argu) {
-      R _ret=null;
-      n.f0.accept(this, argu);
-      return _ret;
-   }
-
-   /**
-    * f0 -> <ASC>
-    */
-   public R visit(asc n, A argu) {
-      R _ret=null;
-      n.f0.accept(this, argu);
-      return _ret;
-   }
-
-   /**
-    * f0 -> <DESC>
-    */
-   public R visit(desc n, A argu) {
       R _ret=null;
       n.f0.accept(this, argu);
       return _ret;

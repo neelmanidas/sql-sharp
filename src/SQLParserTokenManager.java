@@ -7,10 +7,10 @@ public class SQLParserTokenManager implements SQLParserConstants
 {
 
   /** Debug output. */
-  public  java.io.PrintStream debugStream = System.out;
+  public static  java.io.PrintStream debugStream = System.out;
   /** Set debug output. */
-  public  void setDebugStream(java.io.PrintStream ds) { debugStream = ds; }
-private final int jjStopStringLiteralDfa_0(int pos, long active0)
+  public static  void setDebugStream(java.io.PrintStream ds) { debugStream = ds; }
+private static final int jjStopStringLiteralDfa_0(int pos, long active0)
 {
    switch (pos)
    {
@@ -24,17 +24,17 @@ private final int jjStopStringLiteralDfa_0(int pos, long active0)
          return -1;
    }
 }
-private final int jjStartNfa_0(int pos, long active0)
+private static final int jjStartNfa_0(int pos, long active0)
 {
    return jjMoveNfa_0(jjStopStringLiteralDfa_0(pos, active0), pos + 1);
 }
-private int jjStopAtPos(int pos, int kind)
+static private int jjStopAtPos(int pos, int kind)
 {
    jjmatchedKind = kind;
    jjmatchedPos = pos;
    return pos + 1;
 }
-private int jjMoveStringLiteralDfa0_0()
+static private int jjMoveStringLiteralDfa0_0()
 {
    switch(curChar)
    {
@@ -70,7 +70,7 @@ private int jjMoveStringLiteralDfa0_0()
          return jjMoveNfa_0(5, 0);
    }
 }
-private int jjMoveStringLiteralDfa1_0(long active0)
+static private int jjMoveStringLiteralDfa1_0(long active0)
 {
    try { curChar = input_stream.readChar(); }
    catch(java.io.IOException e) {
@@ -108,7 +108,7 @@ private int jjMoveStringLiteralDfa1_0(long active0)
    }
    return jjStartNfa_0(0, active0);
 }
-private int jjMoveStringLiteralDfa2_0(long old0, long active0)
+static private int jjMoveStringLiteralDfa2_0(long old0, long active0)
 {
    if (((active0 &= old0)) == 0L)
       return jjStartNfa_0(0, old0);
@@ -144,7 +144,7 @@ private int jjMoveStringLiteralDfa2_0(long old0, long active0)
    }
    return jjStartNfa_0(1, active0);
 }
-private int jjMoveStringLiteralDfa3_0(long old0, long active0)
+static private int jjMoveStringLiteralDfa3_0(long old0, long active0)
 {
    if (((active0 &= old0)) == 0L)
       return jjStartNfa_0(1, old0);
@@ -174,7 +174,7 @@ private int jjMoveStringLiteralDfa3_0(long old0, long active0)
    }
    return jjStartNfa_0(2, active0);
 }
-private int jjMoveStringLiteralDfa4_0(long old0, long active0)
+static private int jjMoveStringLiteralDfa4_0(long old0, long active0)
 {
    if (((active0 &= old0)) == 0L)
       return jjStartNfa_0(2, old0);
@@ -200,7 +200,7 @@ private int jjMoveStringLiteralDfa4_0(long old0, long active0)
    }
    return jjStartNfa_0(3, active0);
 }
-private int jjMoveStringLiteralDfa5_0(long old0, long active0)
+static private int jjMoveStringLiteralDfa5_0(long old0, long active0)
 {
    if (((active0 &= old0)) == 0L)
       return jjStartNfa_0(3, old0);
@@ -222,7 +222,7 @@ private int jjMoveStringLiteralDfa5_0(long old0, long active0)
    }
    return jjStartNfa_0(4, active0);
 }
-private int jjMoveStringLiteralDfa6_0(long old0, long active0)
+static private int jjMoveStringLiteralDfa6_0(long old0, long active0)
 {
    if (((active0 &= old0)) == 0L)
       return jjStartNfa_0(4, old0);
@@ -240,7 +240,7 @@ private int jjMoveStringLiteralDfa6_0(long old0, long active0)
    }
    return jjStartNfa_0(5, active0);
 }
-private int jjMoveStringLiteralDfa7_0(long old0, long active0)
+static private int jjMoveStringLiteralDfa7_0(long old0, long active0)
 {
    if (((active0 &= old0)) == 0L)
       return jjStartNfa_0(5, old0);
@@ -262,7 +262,7 @@ private int jjMoveStringLiteralDfa7_0(long old0, long active0)
    }
    return jjStartNfa_0(6, active0);
 }
-private int jjMoveNfa_0(int startState, int curPos)
+static private int jjMoveNfa_0(int startState, int curPos)
 {
    int startsAt = 0;
    jjnewStateCnt = 35;
@@ -531,14 +531,14 @@ static final long[] jjtoToken = {
 static final long[] jjtoSkip = {
    0x1eL, 
 };
-protected SimpleCharStream input_stream;
-private final int[] jjrounds = new int[35];
-private final int[] jjstateSet = new int[70];
-protected char curChar;
+static protected SimpleCharStream input_stream;
+static private final int[] jjrounds = new int[35];
+static private final int[] jjstateSet = new int[70];
+static protected char curChar;
 /** Constructor. */
 public SQLParserTokenManager(SimpleCharStream stream){
-   if (SimpleCharStream.staticFlag)
-      throw new Error("ERROR: Cannot use a static CharStream class with a non-static lexical analyzer.");
+   if (input_stream != null)
+      throw new TokenMgrError("ERROR: Second call to constructor of static lexer. You must use ReInit() to initialize the static variables.", TokenMgrError.STATIC_LEXER_ERROR);
    input_stream = stream;
 }
 
@@ -549,14 +549,14 @@ public SQLParserTokenManager(SimpleCharStream stream, int lexState){
 }
 
 /** Reinitialise parser. */
-public void ReInit(SimpleCharStream stream)
+static public void ReInit(SimpleCharStream stream)
 {
    jjmatchedPos = jjnewStateCnt = 0;
    curLexState = defaultLexState;
    input_stream = stream;
    ReInitRounds();
 }
-private void ReInitRounds()
+static private void ReInitRounds()
 {
    int i;
    jjround = 0x80000001;
@@ -565,14 +565,14 @@ private void ReInitRounds()
 }
 
 /** Reinitialise parser. */
-public void ReInit(SimpleCharStream stream, int lexState)
+static public void ReInit(SimpleCharStream stream, int lexState)
 {
    ReInit(stream);
    SwitchTo(lexState);
 }
 
 /** Switch to specified lex state. */
-public void SwitchTo(int lexState)
+static public void SwitchTo(int lexState)
 {
    if (lexState >= 1 || lexState < 0)
       throw new TokenMgrError("Error: Ignoring invalid lexical state : " + lexState + ". State unchanged.", TokenMgrError.INVALID_LEXICAL_STATE);
@@ -580,7 +580,7 @@ public void SwitchTo(int lexState)
       curLexState = lexState;
 }
 
-protected Token jjFillToken()
+static protected Token jjFillToken()
 {
    final Token t;
    final String curTokenImage;
@@ -604,15 +604,15 @@ protected Token jjFillToken()
    return t;
 }
 
-int curLexState = 0;
-int defaultLexState = 0;
-int jjnewStateCnt;
-int jjround;
-int jjmatchedPos;
-int jjmatchedKind;
+static int curLexState = 0;
+static int defaultLexState = 0;
+static int jjnewStateCnt;
+static int jjround;
+static int jjmatchedPos;
+static int jjmatchedKind;
 
 /** Get the next Token. */
-public Token getNextToken() 
+public static Token getNextToken() 
 {
   Token matchedToken;
   int curPos = 0;
@@ -676,7 +676,7 @@ public Token getNextToken()
   }
 }
 
-private void jjCheckNAdd(int state)
+static private void jjCheckNAdd(int state)
 {
    if (jjrounds[state] != jjround)
    {
@@ -684,19 +684,19 @@ private void jjCheckNAdd(int state)
       jjrounds[state] = jjround;
    }
 }
-private void jjAddStates(int start, int end)
+static private void jjAddStates(int start, int end)
 {
    do {
       jjstateSet[jjnewStateCnt++] = jjnextStates[start];
    } while (start++ != end);
 }
-private void jjCheckNAddTwoStates(int state1, int state2)
+static private void jjCheckNAddTwoStates(int state1, int state2)
 {
    jjCheckNAdd(state1);
    jjCheckNAdd(state2);
 }
 
-private void jjCheckNAddStates(int start, int end)
+static private void jjCheckNAddStates(int start, int end)
 {
    do {
       jjCheckNAdd(jjnextStates[start]);

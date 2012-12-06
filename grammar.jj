@@ -49,23 +49,31 @@ void queryList() :
 
 void querySpecification() :
 {}
-{ select() selectList() from() identifier() [ where() booleanValueExpression() ] [ groupby() identifier() ] [ orderby() commonValueExpression() [ asc() | desc() ] ]";" }
+{ select() from() [ where() ] [ groupby() ] [ orderby() ]";" }
 
 void select() :
 {}
-{ <SELECT> }
+{ <SELECT> ( "*" | derivedColumn() ( "," derivedColumn() )* ) }
 
-void selectList() :
+void from() :
 {}
-{ asterisk() | derivedColumn() ( "," derivedColumn() )* }
+{ <FROM> identifier() }
 
-void asterisk() :
+void where() :
 {}
-{ <asterisk> }
+{ <WHERE> booleanValueExpression() }
+
+void groupby() :
+{}
+{ <GROUPBY> identifier() }
+
+void orderby() :
+{}
+{ <ORDERBY> identifier() [ <ASC> | <DESC> ] }
 
 void derivedColumn() :
 {}
-{ commonValueExpression() [ [as()] identifier() ] }
+{ commonValueExpression() [ <AS>  identifier() ] }
 
 void commonValueExpression() :
 {}
@@ -75,21 +83,9 @@ void nonparenthesizedValueExpressionPrimary() :
 {}
 { identifier() | <setfunctiontype> "(" commonValueExpression() ")" | <number> }
 
-void as() :
-{}
-{ <AS> }
-
-void from() :
-{}
-{ <FROM> }
-
 void identifier() :
 {}
 { <identifier> }
-
-void where() :
-{}
-{ <WHERE> }
 
 void booleanValueExpression() :
 {}
@@ -97,11 +93,7 @@ void booleanValueExpression() :
 
 void booleanValueExpressionPrime() :
 {}
-{ ( or() booleanTerm() booleanValueExpressionPrime() )? }
-
-void or() :
-{}
-{ <OR> }
+{ ( <OR> booleanTerm() booleanValueExpressionPrime() )? }
 
 void booleanTerm() :
 {}
@@ -109,37 +101,13 @@ void booleanTerm() :
 
 void booleanTermPrime() :
 {}
-{ ( and() booleanFactor() booleanTermPrime())? }
-
-void and() :
-{}
-{ <AND> }
+{ ( <AND> booleanFactor() booleanTermPrime())? }
 
 void booleanFactor() : 
 {}
-{ [not()] boleanPredicand() [<compop> boleanPredicand()] }
-
-void not() :
-{}
-{ <NOT> }
+{ [ <NOT> ] boleanPredicand() [<compop> boleanPredicand()] }
 
 void boleanPredicand() :
 {}
 { "(" booleanValueExpression() ")" | nonparenthesizedValueExpressionPrimary() }
-
-void groupby() :
-{}
-{ <GROUPBY> }
-
-void orderby() :
-{}
-{ <ORDERBY> }
-
-void asc() :
-{}
-{ <ASC> }
-
-void desc() :
-{}
-{ <DESC> }
 

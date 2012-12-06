@@ -7,44 +7,36 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> select()
- * f1 -> selectList()
- * f2 -> from()
- * f3 -> identifier()
- * f4 -> [ where() booleanValueExpression() ]
- * f5 -> [ groupby() identifier() ]
- * f6 -> [ orderby() commonValueExpression() [ asc() | desc() ] ]
- * f7 -> ";"
+ * f1 -> from()
+ * f2 -> [ where() ]
+ * f3 -> [ groupby() ]
+ * f4 -> [ orderby() ]
+ * f5 -> ";"
  */
 public class querySpecification implements Node {
    public select f0;
-   public selectList f1;
-   public from f2;
-   public identifier f3;
+   public from f1;
+   public NodeOptional f2;
+   public NodeOptional f3;
    public NodeOptional f4;
-   public NodeOptional f5;
-   public NodeOptional f6;
-   public NodeToken f7;
+   public NodeToken f5;
 
-   public querySpecification(select n0, selectList n1, from n2, identifier n3, NodeOptional n4, NodeOptional n5, NodeOptional n6, NodeToken n7) {
+   public querySpecification(select n0, from n1, NodeOptional n2, NodeOptional n3, NodeOptional n4, NodeToken n5) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
       f3 = n3;
       f4 = n4;
       f5 = n5;
-      f6 = n6;
-      f7 = n7;
    }
 
-   public querySpecification(select n0, selectList n1, from n2, identifier n3, NodeOptional n4, NodeOptional n5, NodeOptional n6) {
+   public querySpecification(select n0, from n1, NodeOptional n2, NodeOptional n3, NodeOptional n4) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
       f3 = n3;
       f4 = n4;
-      f5 = n5;
-      f6 = n6;
-      f7 = new NodeToken(";");
+      f5 = new NodeToken(";");
    }
 
    public void accept(visitor.Visitor v) {
