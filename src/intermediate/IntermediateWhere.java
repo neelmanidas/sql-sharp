@@ -7,9 +7,9 @@ import syntaxtree.where;
 
 
 public class IntermediateWhere extends IntermediateNode {
-    IntermediateIdentifier left;
-    IntermediateOperator operator;
-    IntermediateNode right;
+    private IntermediateIdentifier left;
+    private IntermediateOperator operator;
+    private IntermediateNode right;
 
     public IntermediateWhere(where n, String tokenImage) {
         super(n,tokenImage);
@@ -25,6 +25,27 @@ public class IntermediateWhere extends IntermediateNode {
         {
             left = new IntermediateIdentifier(image);
         }
+    }
+
+    /**
+     * @return the left
+     */
+    public IntermediateIdentifier getLeft() {
+        return left;
+    }
+
+    /**
+     * @return the operator
+     */
+    public IntermediateOperator getOperator() {
+        return operator;
+    }
+
+    /**
+     * @return the right
+     */
+    public IntermediateNode getRight() {
+        return right;
     }
     
 }

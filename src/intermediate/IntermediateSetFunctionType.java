@@ -6,15 +6,15 @@ public class IntermediateSetFunctionType extends IntermediateColumSelection {
     private IntermediateIdentifier param;
 
     public IntermediateSetFunctionType(String functionName, IntermediateIdentifier identifier) {
-        super(functionName+"_"+identifier);
-        this.functionName = functionName;
+        super(functionName+"_"+identifier.getName());
+        this.functionName = functionName.charAt(0) + functionName.substring(1) ;
         this.param = identifier;
     }
 
     /**
      * @return the functionName
      */
-    public String getFunctionName() {
+    public String getFunction() {
         return functionName;
     }
 

@@ -1,1 +1,1 @@
-SELECT nombre,edad,COUNT(grupo) FROM tabla WHERE edad >= 18 GROUP BY edad ORDER BY edad;
+SELECT nombre,edad, telefono FROM tabla WHERE edad <= 18 ORDER BY edad;
