@@ -54,10 +54,10 @@ public class Main {
                     colum += ",";
                     translation += colum;
                 }
+                translation = translation.substring(0, translation.lastIndexOf(",")) + "}";
             } else {
                 translation += "s => s";
-            }
-            translation = translation.substring(0, translation.lastIndexOf(",")) + "}";
+            }            
             translation += ")";
         }
         if (n.getClass().equals(IntermediateFrom.class)) {
