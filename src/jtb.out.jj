@@ -288,16 +288,9 @@ nonparenthesizedValueExpressionPrimary nonparenthesizedValueExpressionPrimary() 
 {
    NodeChoice n0;
    identifier n1;
-   NodeSequence n2;
+   setFunctionType n2;
    NodeToken n3;
    Token n4;
-   NodeToken n5;
-   Token n6;
-   commonValueExpression n7;
-   NodeToken n8;
-   Token n9;
-   NodeToken n10;
-   Token n11;
 
    
 }
@@ -306,19 +299,11 @@ nonparenthesizedValueExpressionPrimary nonparenthesizedValueExpressionPrimary() 
       n1=identifier()
       { n0 = new NodeChoice(n1, 0); }
    |
-      { n2 = new NodeSequence(4); }
-      n4=<setfunctiontype> { n3 = JTBToolkit.makeNodeToken(n4); }
-      { n2.addNode(n3); }
-      n6="(" { n5 = JTBToolkit.makeNodeToken(n6); }
-      { n2.addNode(n5); }
-      n7=commonValueExpression()
-      { n2.addNode(n7); }
-      n9=")" { n8 = JTBToolkit.makeNodeToken(n9); }
-      { n2.addNode(n8); }
+      n2=setFunctionType()
       { n0 = new NodeChoice(n2, 1); }
    |
-      n11=<number> { n10 = JTBToolkit.makeNodeToken(n11); }
-      { n0 = new NodeChoice(n10, 2); }
+      n4=<number> { n3 = JTBToolkit.makeNodeToken(n4); }
+      { n0 = new NodeChoice(n3, 2); }
    )
    
    { return new nonparenthesizedValueExpressionPrimary(n0); }
@@ -335,6 +320,28 @@ identifier identifier() :
    n1=<identifier> { n0 = JTBToolkit.makeNodeToken(n1); }
    
    { return new identifier(n0); }
+}
+
+setFunctionType setFunctionType() :
+{
+   NodeToken n0;
+   Token n1;
+   NodeToken n2;
+   Token n3;
+   NodeToken n4;
+   Token n5;
+   NodeToken n6;
+   Token n7;
+
+   
+}
+{
+   n1=<setfunctiontype> { n0 = JTBToolkit.makeNodeToken(n1); }
+   n3="(" { n2 = JTBToolkit.makeNodeToken(n3); }
+   n5=<identifier> { n4 = JTBToolkit.makeNodeToken(n5); }
+   n7=")" { n6 = JTBToolkit.makeNodeToken(n7); }
+   
+   { return new setFunctionType(n0,n2,n4,n6); }
 }
 
 booleanValueExpression booleanValueExpression() :

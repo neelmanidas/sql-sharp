@@ -76,11 +76,15 @@ void commonValueExpression() :
 
 void nonparenthesizedValueExpressionPrimary() :
 {}
-{ identifier() | <setfunctiontype> "(" commonValueExpression() ")" | <number> }
+{ identifier() | setFunctionType() | <number> }
 
 void identifier() :
 {}
 { <identifier> }
+
+void setFunctionType():
+{}
+{ <setfunctiontype> "(" <identifier> ")" }
 
 void booleanValueExpression() :
 {}

@@ -143,7 +143,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
 
    /**
     * f0 -> identifier()
-    *       | <setfunctiontype> "(" commonValueExpression() ")"
+    *       | setFunctionType()
     *       | <number>
     */
    public void visit(nonparenthesizedValueExpressionPrimary n, A argu) {
@@ -155,6 +155,19 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
     */
    public void visit(identifier n, A argu) {
       n.f0.accept(this, argu);
+   }
+
+   /**
+    * f0 -> <setfunctiontype>
+    * f1 -> "("
+    * f2 -> <identifier>
+    * f3 -> ")"
+    */
+   public void visit(setFunctionType n, A argu) {
+      n.f0.accept(this, argu);
+      n.f1.accept(this, argu);
+      n.f2.accept(this, argu);
+      n.f3.accept(this, argu);
    }
 
    /**

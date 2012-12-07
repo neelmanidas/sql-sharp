@@ -9,7 +9,6 @@ import syntaxtree.booleanTermPrime;
 import syntaxtree.booleanValueExpression;
 import syntaxtree.booleanValueExpressionPrime;
 import syntaxtree.commonValueExpression;
-import syntaxtree.derivedColumn;
 import syntaxtree.from;
 import syntaxtree.groupby;
 import syntaxtree.identifier;
@@ -18,6 +17,7 @@ import syntaxtree.orderby;
 import syntaxtree.queryList;
 import syntaxtree.querySpecification;
 import syntaxtree.select;
+import syntaxtree.setFunctionType;
 import syntaxtree.where;
 import visitor.DepthFirstVisitor;
 
@@ -85,14 +85,6 @@ public class DFVShowTreeVisitor extends DepthFirstVisitor {
     @Override
     public void visit(commonValueExpression n) {
         System.out.println(tab() + "commonValueExpression");
-        depht++;
-        super.visit(n);
-        depht--;
-    }
-
-    @Override
-    public void visit(derivedColumn n) {
-        System.out.println(tab() + "derivedColumn");
         depht++;
         super.visit(n);
         depht--;
@@ -186,4 +178,14 @@ public class DFVShowTreeVisitor extends DepthFirstVisitor {
         super.visit(n);
         depht--;
     }
+
+    @Override
+    public void visit(setFunctionType n) {
+        System.out.println(tab() + "setFunctionType");
+        depht++;
+        super.visit(n);
+        depht--;
+    }
+    
+    
 }

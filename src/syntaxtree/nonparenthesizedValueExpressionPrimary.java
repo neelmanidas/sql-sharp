@@ -7,7 +7,7 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> identifier()
- *       | <setfunctiontype> "(" commonValueExpression() ")"
+ *       | setFunctionType()
  *       | <number>
  */
 public class nonparenthesizedValueExpressionPrimary implements Node {

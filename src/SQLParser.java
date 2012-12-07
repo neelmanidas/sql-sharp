@@ -260,40 +260,22 @@ class SQLParser implements SQLParserConstants {
   static final public nonparenthesizedValueExpressionPrimary nonparenthesizedValueExpressionPrimary() throws ParseException {
    NodeChoice n0;
    identifier n1;
-   NodeSequence n2;
+   setFunctionType n2;
    NodeToken n3;
    Token n4;
-   NodeToken n5;
-   Token n6;
-   commonValueExpression n7;
-   NodeToken n8;
-   Token n9;
-   NodeToken n10;
-   Token n11;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case identifier:
       n1 = identifier();
         n0 = new NodeChoice(n1, 0);
       break;
     case setfunctiontype:
-        n2 = new NodeSequence(4);
-      n4 = jj_consume_token(setfunctiontype);
-                             n3 = JTBToolkit.makeNodeToken(n4);
-        n2.addNode(n3);
-      n6 = jj_consume_token(leftparen);
-               n5 = JTBToolkit.makeNodeToken(n6);
-        n2.addNode(n5);
-      n7 = commonValueExpression();
-        n2.addNode(n7);
-      n9 = jj_consume_token(rightparen);
-               n8 = JTBToolkit.makeNodeToken(n9);
-        n2.addNode(n8);
+      n2 = setFunctionType();
         n0 = new NodeChoice(n2, 1);
       break;
     case number:
-      n11 = jj_consume_token(number);
-                     n10 = JTBToolkit.makeNodeToken(n11);
-        n0 = new NodeChoice(n10, 2);
+      n4 = jj_consume_token(number);
+                    n3 = JTBToolkit.makeNodeToken(n4);
+        n0 = new NodeChoice(n3, 2);
       break;
     default:
       jj_la1[9] = jj_gen;
@@ -310,6 +292,27 @@ class SQLParser implements SQLParserConstants {
     n1 = jj_consume_token(identifier);
                      n0 = JTBToolkit.makeNodeToken(n1);
      {if (true) return new identifier(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  static final public setFunctionType setFunctionType() throws ParseException {
+   NodeToken n0;
+   Token n1;
+   NodeToken n2;
+   Token n3;
+   NodeToken n4;
+   Token n5;
+   NodeToken n6;
+   Token n7;
+    n1 = jj_consume_token(setfunctiontype);
+                          n0 = JTBToolkit.makeNodeToken(n1);
+    n3 = jj_consume_token(leftparen);
+            n2 = JTBToolkit.makeNodeToken(n3);
+    n5 = jj_consume_token(identifier);
+                     n4 = JTBToolkit.makeNodeToken(n5);
+    n7 = jj_consume_token(rightparen);
+            n6 = JTBToolkit.makeNodeToken(n7);
+     {if (true) return new setFunctionType(n0,n2,n4,n6);}
     throw new Error("Missing return statement in function");
   }
 

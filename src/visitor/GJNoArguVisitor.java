@@ -87,7 +87,7 @@ public interface GJNoArguVisitor<R> {
 
    /**
     * f0 -> identifier()
-    *       | <setfunctiontype> "(" commonValueExpression() ")"
+    *       | setFunctionType()
     *       | <number>
     */
    public R visit(nonparenthesizedValueExpressionPrimary n);
@@ -96,6 +96,14 @@ public interface GJNoArguVisitor<R> {
     * f0 -> <identifier>
     */
    public R visit(identifier n);
+
+   /**
+    * f0 -> <setfunctiontype>
+    * f1 -> "("
+    * f2 -> <identifier>
+    * f3 -> ")"
+    */
+   public R visit(setFunctionType n);
 
    /**
     * f0 -> booleanTerm()

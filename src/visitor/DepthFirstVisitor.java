@@ -133,7 +133,7 @@ public class DepthFirstVisitor implements Visitor {
 
    /**
     * f0 -> identifier()
-    *       | <setfunctiontype> "(" commonValueExpression() ")"
+    *       | setFunctionType()
     *       | <number>
     */
    public void visit(nonparenthesizedValueExpressionPrimary n) {
@@ -145,6 +145,19 @@ public class DepthFirstVisitor implements Visitor {
     */
    public void visit(identifier n) {
       n.f0.accept(this);
+   }
+
+   /**
+    * f0 -> <setfunctiontype>
+    * f1 -> "("
+    * f2 -> <identifier>
+    * f3 -> ")"
+    */
+   public void visit(setFunctionType n) {
+      n.f0.accept(this);
+      n.f1.accept(this);
+      n.f2.accept(this);
+      n.f3.accept(this);
    }
 
    /**

@@ -87,7 +87,7 @@ public interface GJVisitor<R,A> {
 
    /**
     * f0 -> identifier()
-    *       | <setfunctiontype> "(" commonValueExpression() ")"
+    *       | setFunctionType()
     *       | <number>
     */
    public R visit(nonparenthesizedValueExpressionPrimary n, A argu);
@@ -96,6 +96,14 @@ public interface GJVisitor<R,A> {
     * f0 -> <identifier>
     */
    public R visit(identifier n, A argu);
+
+   /**
+    * f0 -> <setfunctiontype>
+    * f1 -> "("
+    * f2 -> <identifier>
+    * f3 -> ")"
+    */
+   public R visit(setFunctionType n, A argu);
 
    /**
     * f0 -> booleanTerm()

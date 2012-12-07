@@ -171,7 +171,7 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
 
    /**
     * f0 -> identifier()
-    *       | <setfunctiontype> "(" commonValueExpression() ")"
+    *       | setFunctionType()
     *       | <number>
     */
    public R visit(nonparenthesizedValueExpressionPrimary n, A argu) {
@@ -186,6 +186,21 @@ public class GJDepthFirst<R,A> implements GJVisitor<R,A> {
    public R visit(identifier n, A argu) {
       R _ret=null;
       n.f0.accept(this, argu);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <setfunctiontype>
+    * f1 -> "("
+    * f2 -> <identifier>
+    * f3 -> ")"
+    */
+   public R visit(setFunctionType n, A argu) {
+      R _ret=null;
+      n.f0.accept(this, argu);
+      n.f1.accept(this, argu);
+      n.f2.accept(this, argu);
+      n.f3.accept(this, argu);
       return _ret;
    }
 

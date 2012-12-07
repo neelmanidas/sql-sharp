@@ -21,7 +21,8 @@ public class Main {
         seq.visit(prog);
         for (Iterator<IntermediateNode> it = seq.getSequence().iterator(); it.hasNext();) {
             IntermediateNode n = it.next();
-            
+
+            int o=0;
         }
     }
 }

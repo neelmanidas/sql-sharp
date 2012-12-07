@@ -87,7 +87,7 @@ public interface Visitor {
 
    /**
     * f0 -> identifier()
-    *       | <setfunctiontype> "(" commonValueExpression() ")"
+    *       | setFunctionType()
     *       | <number>
     */
    public void visit(nonparenthesizedValueExpressionPrimary n);
@@ -96,6 +96,14 @@ public interface Visitor {
     * f0 -> <identifier>
     */
    public void visit(identifier n);
+
+   /**
+    * f0 -> <setfunctiontype>
+    * f1 -> "("
+    * f2 -> <identifier>
+    * f3 -> ")"
+    */
+   public void visit(setFunctionType n);
 
    /**
     * f0 -> booleanTerm()

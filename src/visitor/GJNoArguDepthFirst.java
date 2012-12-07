@@ -171,7 +171,7 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
 
    /**
     * f0 -> identifier()
-    *       | <setfunctiontype> "(" commonValueExpression() ")"
+    *       | setFunctionType()
     *       | <number>
     */
    public R visit(nonparenthesizedValueExpressionPrimary n) {
@@ -186,6 +186,21 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
    public R visit(identifier n) {
       R _ret=null;
       n.f0.accept(this);
+      return _ret;
+   }
+
+   /**
+    * f0 -> <setfunctiontype>
+    * f1 -> "("
+    * f2 -> <identifier>
+    * f3 -> ")"
+    */
+   public R visit(setFunctionType n) {
+      R _ret=null;
+      n.f0.accept(this);
+      n.f1.accept(this);
+      n.f2.accept(this);
+      n.f3.accept(this);
       return _ret;
    }
 
