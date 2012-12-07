@@ -7,20 +7,28 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> <WHERE>
- * f1 -> booleanValueExpression()
+ * f1 -> identifier()
+ * f2 -> <compop>
+ * f3 -> ( identifier() | <number> )
  */
 public class where implements Node {
    public NodeToken f0;
-   public booleanValueExpression f1;
+   public identifier f1;
+   public NodeToken f2;
+   public NodeChoice f3;
 
-   public where(NodeToken n0, booleanValueExpression n1) {
+   public where(NodeToken n0, identifier n1, NodeToken n2, NodeChoice n3) {
       f0 = n0;
       f1 = n1;
+      f2 = n2;
+      f3 = n3;
    }
 
-   public where(booleanValueExpression n0) {
+   public where(identifier n0, NodeToken n1, NodeChoice n2) {
       f0 = new NodeToken("WHERE");
       f1 = n0;
+      f2 = n1;
+      f3 = n2;
    }
 
    public void accept(visitor.Visitor v) {

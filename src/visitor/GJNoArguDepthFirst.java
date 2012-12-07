@@ -126,12 +126,16 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
 
    /**
     * f0 -> <WHERE>
-    * f1 -> booleanValueExpression()
+    * f1 -> identifier()
+    * f2 -> <compop>
+    * f3 -> ( identifier() | <number> )
     */
    public R visit(where n) {
       R _ret=null;
       n.f0.accept(this);
       n.f1.accept(this);
+      n.f2.accept(this);
+      n.f3.accept(this);
       return _ret;
    }
 
@@ -201,69 +205,6 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
       n.f1.accept(this);
       n.f2.accept(this);
       n.f3.accept(this);
-      return _ret;
-   }
-
-   /**
-    * f0 -> booleanTerm()
-    * f1 -> booleanValueExpressionPrime()
-    */
-   public R visit(booleanValueExpression n) {
-      R _ret=null;
-      n.f0.accept(this);
-      n.f1.accept(this);
-      return _ret;
-   }
-
-   /**
-    * f0 -> ( <OR> booleanTerm() booleanValueExpressionPrime() )?
-    */
-   public R visit(booleanValueExpressionPrime n) {
-      R _ret=null;
-      n.f0.accept(this);
-      return _ret;
-   }
-
-   /**
-    * f0 -> booleanFactor()
-    * f1 -> booleanTermPrime()
-    */
-   public R visit(booleanTerm n) {
-      R _ret=null;
-      n.f0.accept(this);
-      n.f1.accept(this);
-      return _ret;
-   }
-
-   /**
-    * f0 -> ( <AND> booleanFactor() booleanTermPrime() )?
-    */
-   public R visit(booleanTermPrime n) {
-      R _ret=null;
-      n.f0.accept(this);
-      return _ret;
-   }
-
-   /**
-    * f0 -> [ <NOT> ]
-    * f1 -> boleanPredicand()
-    * f2 -> [ <compop> boleanPredicand() ]
-    */
-   public R visit(booleanFactor n) {
-      R _ret=null;
-      n.f0.accept(this);
-      n.f1.accept(this);
-      n.f2.accept(this);
-      return _ret;
-   }
-
-   /**
-    * f0 -> "(" booleanValueExpression() ")"
-    *       | nonparenthesizedValueExpressionPrimary()
-    */
-   public R visit(boleanPredicand n) {
-      R _ret=null;
-      n.f0.accept(this);
       return _ret;
    }
 

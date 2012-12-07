@@ -62,7 +62,9 @@ public interface GJVoidVisitor<A> {
 
    /**
     * f0 -> <WHERE>
-    * f1 -> booleanValueExpression()
+    * f1 -> identifier()
+    * f2 -> <compop>
+    * f3 -> ( identifier() | <number> )
     */
    public void visit(where n, A argu);
 
@@ -104,41 +106,6 @@ public interface GJVoidVisitor<A> {
     * f3 -> ")"
     */
    public void visit(setFunctionType n, A argu);
-
-   /**
-    * f0 -> booleanTerm()
-    * f1 -> booleanValueExpressionPrime()
-    */
-   public void visit(booleanValueExpression n, A argu);
-
-   /**
-    * f0 -> ( <OR> booleanTerm() booleanValueExpressionPrime() )?
-    */
-   public void visit(booleanValueExpressionPrime n, A argu);
-
-   /**
-    * f0 -> booleanFactor()
-    * f1 -> booleanTermPrime()
-    */
-   public void visit(booleanTerm n, A argu);
-
-   /**
-    * f0 -> ( <AND> booleanFactor() booleanTermPrime() )?
-    */
-   public void visit(booleanTermPrime n, A argu);
-
-   /**
-    * f0 -> [ <NOT> ]
-    * f1 -> boleanPredicand()
-    * f2 -> [ <compop> boleanPredicand() ]
-    */
-   public void visit(booleanFactor n, A argu);
-
-   /**
-    * f0 -> "(" booleanValueExpression() ")"
-    *       | nonparenthesizedValueExpressionPrimary()
-    */
-   public void visit(boleanPredicand n, A argu);
 
 }
 

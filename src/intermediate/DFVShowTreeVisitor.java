@@ -2,12 +2,6 @@ package intermediate;
 
 import syntaxtree.NodeToken;
 import syntaxtree.Prog;
-import syntaxtree.boleanPredicand;
-import syntaxtree.booleanFactor;
-import syntaxtree.booleanTerm;
-import syntaxtree.booleanTermPrime;
-import syntaxtree.booleanValueExpression;
-import syntaxtree.booleanValueExpressionPrime;
 import syntaxtree.commonValueExpression;
 import syntaxtree.from;
 import syntaxtree.groupby;
@@ -29,54 +23,6 @@ public class DFVShowTreeVisitor extends DepthFirstVisitor {
     @Override
     public void visit(Prog n) {
         System.out.println("prog");
-        depht++;
-        super.visit(n);
-        depht--;
-    }
-
-    @Override
-    public void visit(boleanPredicand n) {
-        System.out.println(tab() + "boleanPredicand");
-        depht++;
-        super.visit(n);
-        depht--;
-    }
-
-    @Override
-    public void visit(booleanFactor n) {
-        System.out.println(tab() + "booleanFactor");
-        depht++;
-        super.visit(n);
-        depht--;
-    }
-
-    @Override
-    public void visit(booleanTerm n) {
-        System.out.println(tab() + "booleanTerm");
-        depht++;
-        super.visit(n);
-        depht--;
-    }
-
-    @Override
-    public void visit(booleanTermPrime n) {
-        System.out.println(tab() + "booleanTermPrime");
-        depht++;
-        super.visit(n);
-        depht--;
-    }
-
-    @Override
-    public void visit(booleanValueExpression n) {
-        System.out.println(tab() + "booleanValueExpression");
-        depht++;
-        super.visit(n);
-        depht--;
-    }
-
-    @Override
-    public void visit(booleanValueExpressionPrime n) {
-        System.out.println(tab() + "booleanValueExpressionPrime");
         depht++;
         super.visit(n);
         depht--;

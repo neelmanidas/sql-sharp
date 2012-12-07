@@ -62,7 +62,9 @@ public interface Visitor {
 
    /**
     * f0 -> <WHERE>
-    * f1 -> booleanValueExpression()
+    * f1 -> identifier()
+    * f2 -> <compop>
+    * f3 -> ( identifier() | <number> )
     */
    public void visit(where n);
 
@@ -104,41 +106,6 @@ public interface Visitor {
     * f3 -> ")"
     */
    public void visit(setFunctionType n);
-
-   /**
-    * f0 -> booleanTerm()
-    * f1 -> booleanValueExpressionPrime()
-    */
-   public void visit(booleanValueExpression n);
-
-   /**
-    * f0 -> ( <OR> booleanTerm() booleanValueExpressionPrime() )?
-    */
-   public void visit(booleanValueExpressionPrime n);
-
-   /**
-    * f0 -> booleanFactor()
-    * f1 -> booleanTermPrime()
-    */
-   public void visit(booleanTerm n);
-
-   /**
-    * f0 -> ( <AND> booleanFactor() booleanTermPrime() )?
-    */
-   public void visit(booleanTermPrime n);
-
-   /**
-    * f0 -> [ <NOT> ]
-    * f1 -> boleanPredicand()
-    * f2 -> [ <compop> boleanPredicand() ]
-    */
-   public void visit(booleanFactor n);
-
-   /**
-    * f0 -> "(" booleanValueExpression() ")"
-    *       | nonparenthesizedValueExpressionPrimary()
-    */
-   public void visit(boleanPredicand n);
 
 }
 

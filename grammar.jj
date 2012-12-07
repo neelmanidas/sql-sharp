@@ -25,11 +25,7 @@ TOKEN : {
     |	< #integer: (<digit>)+ >
     |	< #real: ( <digit> )+ "." ( <digit> )+ >
     |   < number: ( "+" | "-" )? ( <integer> | <real> ) >
-    |	< OR: "OR">
-    |	< AND: "AND">
-    |	<semicolon: ";">
-    |	< IS: "IS">
-    |	< NOT: "NOT">
+    |	<semicolon: ";">   
     |	< #equalsoperator: "=" >
     |	< #lessthanoperator: "<" >
     |	< #greaterthanoperator: ">" >
@@ -60,7 +56,7 @@ void from() :
 
 void where() :
 {}
-{ <WHERE> booleanValueExpression() }
+{ <WHERE> identifier() <compop> ( identifier() | <number> ) }
 
 void groupby() :
 {}
@@ -85,28 +81,4 @@ void identifier() :
 void setFunctionType():
 {}
 { <setfunctiontype> "(" <identifier> ")" }
-
-void booleanValueExpression() :
-{}
-{ booleanTerm() booleanValueExpressionPrime() }
-
-void booleanValueExpressionPrime() :
-{}
-{ ( <OR> booleanTerm() booleanValueExpressionPrime() )? }
-
-void booleanTerm() :
-{}
-{ booleanFactor() booleanTermPrime() }
-
-void booleanTermPrime() :
-{}
-{ ( <AND> booleanFactor() booleanTermPrime())? }
-
-void booleanFactor() : 
-{}
-{ [ <NOT> ] boleanPredicand() [<compop> boleanPredicand()] }
-
-void boleanPredicand() :
-{}
-{ "(" booleanValueExpression() ")" | nonparenthesizedValueExpressionPrimary() }
 

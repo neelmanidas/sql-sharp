@@ -39,27 +39,19 @@ public interface SQLParserConstants {
   /** RegularExpression Id. */
   int number = 19;
   /** RegularExpression Id. */
-  int OR = 20;
+  int semicolon = 20;
   /** RegularExpression Id. */
-  int AND = 21;
+  int equalsoperator = 21;
   /** RegularExpression Id. */
-  int semicolon = 22;
+  int lessthanoperator = 22;
   /** RegularExpression Id. */
-  int IS = 23;
+  int greaterthanoperator = 23;
   /** RegularExpression Id. */
-  int NOT = 24;
+  int compop = 24;
   /** RegularExpression Id. */
-  int equalsoperator = 25;
+  int ASC = 25;
   /** RegularExpression Id. */
-  int lessthanoperator = 26;
-  /** RegularExpression Id. */
-  int greaterthanoperator = 27;
-  /** RegularExpression Id. */
-  int compop = 28;
-  /** RegularExpression Id. */
-  int ASC = 29;
-  /** RegularExpression Id. */
-  int DESC = 30;
+  int DESC = 26;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -86,11 +78,7 @@ public interface SQLParserConstants {
     "<integer>",
     "<real>",
     "<number>",
-    "\"OR\"",
-    "\"AND\"",
     "\";\"",
-    "\"IS\"",
-    "\"NOT\"",
     "\"=\"",
     "\"<\"",
     "\">\"",

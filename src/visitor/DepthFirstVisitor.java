@@ -96,11 +96,15 @@ public class DepthFirstVisitor implements Visitor {
 
    /**
     * f0 -> <WHERE>
-    * f1 -> booleanValueExpression()
+    * f1 -> identifier()
+    * f2 -> <compop>
+    * f3 -> ( identifier() | <number> )
     */
    public void visit(where n) {
       n.f0.accept(this);
       n.f1.accept(this);
+      n.f2.accept(this);
+      n.f3.accept(this);
    }
 
    /**
@@ -158,57 +162,6 @@ public class DepthFirstVisitor implements Visitor {
       n.f1.accept(this);
       n.f2.accept(this);
       n.f3.accept(this);
-   }
-
-   /**
-    * f0 -> booleanTerm()
-    * f1 -> booleanValueExpressionPrime()
-    */
-   public void visit(booleanValueExpression n) {
-      n.f0.accept(this);
-      n.f1.accept(this);
-   }
-
-   /**
-    * f0 -> ( <OR> booleanTerm() booleanValueExpressionPrime() )?
-    */
-   public void visit(booleanValueExpressionPrime n) {
-      n.f0.accept(this);
-   }
-
-   /**
-    * f0 -> booleanFactor()
-    * f1 -> booleanTermPrime()
-    */
-   public void visit(booleanTerm n) {
-      n.f0.accept(this);
-      n.f1.accept(this);
-   }
-
-   /**
-    * f0 -> ( <AND> booleanFactor() booleanTermPrime() )?
-    */
-   public void visit(booleanTermPrime n) {
-      n.f0.accept(this);
-   }
-
-   /**
-    * f0 -> [ <NOT> ]
-    * f1 -> boleanPredicand()
-    * f2 -> [ <compop> boleanPredicand() ]
-    */
-   public void visit(booleanFactor n) {
-      n.f0.accept(this);
-      n.f1.accept(this);
-      n.f2.accept(this);
-   }
-
-   /**
-    * f0 -> "(" booleanValueExpression() ")"
-    *       | nonparenthesizedValueExpressionPrimary()
-    */
-   public void visit(boleanPredicand n) {
-      n.f0.accept(this);
    }
 
 }

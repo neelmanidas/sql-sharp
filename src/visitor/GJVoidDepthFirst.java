@@ -106,11 +106,15 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
 
    /**
     * f0 -> <WHERE>
-    * f1 -> booleanValueExpression()
+    * f1 -> identifier()
+    * f2 -> <compop>
+    * f3 -> ( identifier() | <number> )
     */
    public void visit(where n, A argu) {
       n.f0.accept(this, argu);
       n.f1.accept(this, argu);
+      n.f2.accept(this, argu);
+      n.f3.accept(this, argu);
    }
 
    /**
@@ -168,57 +172,6 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
       n.f1.accept(this, argu);
       n.f2.accept(this, argu);
       n.f3.accept(this, argu);
-   }
-
-   /**
-    * f0 -> booleanTerm()
-    * f1 -> booleanValueExpressionPrime()
-    */
-   public void visit(booleanValueExpression n, A argu) {
-      n.f0.accept(this, argu);
-      n.f1.accept(this, argu);
-   }
-
-   /**
-    * f0 -> ( <OR> booleanTerm() booleanValueExpressionPrime() )?
-    */
-   public void visit(booleanValueExpressionPrime n, A argu) {
-      n.f0.accept(this, argu);
-   }
-
-   /**
-    * f0 -> booleanFactor()
-    * f1 -> booleanTermPrime()
-    */
-   public void visit(booleanTerm n, A argu) {
-      n.f0.accept(this, argu);
-      n.f1.accept(this, argu);
-   }
-
-   /**
-    * f0 -> ( <AND> booleanFactor() booleanTermPrime() )?
-    */
-   public void visit(booleanTermPrime n, A argu) {
-      n.f0.accept(this, argu);
-   }
-
-   /**
-    * f0 -> [ <NOT> ]
-    * f1 -> boleanPredicand()
-    * f2 -> [ <compop> boleanPredicand() ]
-    */
-   public void visit(booleanFactor n, A argu) {
-      n.f0.accept(this, argu);
-      n.f1.accept(this, argu);
-      n.f2.accept(this, argu);
-   }
-
-   /**
-    * f0 -> "(" booleanValueExpression() ")"
-    *       | nonparenthesizedValueExpressionPrimary()
-    */
-   public void visit(boleanPredicand n, A argu) {
-      n.f0.accept(this, argu);
    }
 
 }
